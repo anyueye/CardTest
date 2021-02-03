@@ -8,6 +8,7 @@ namespace CardGame
         private void Start()
         {
             InitBuiltinComponents();
+            InitCustomCompontns();
         }
     }
 }

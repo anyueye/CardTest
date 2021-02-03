@@ -7,5 +7,15 @@
         //     get;
         //     private set;
         // }
+        public static TargetingArrow targetingArrow
+        {
+            get;
+            private set;
+        }
+
+        private static void InitCustomCompontns()
+        {
+            targetingArrow = UnityGameFramework.Runtime.GameEntry.GetComponent<TargetingArrow>();
+        }
     }
 }

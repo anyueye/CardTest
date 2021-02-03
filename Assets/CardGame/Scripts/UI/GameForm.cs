@@ -20,7 +20,18 @@ namespace CardGame
         [SerializeField] private TextMeshProUGUI deckCountText;
         [SerializeField] private TextMeshProUGUI discardPileText;
         [SerializeField] private Button endTurnButton;
+        
 
+        public Vector3 GetDeckPos()
+        {
+            return Camera.main.ScreenToWorldPoint(new Vector3(deckCountText.transform.position.x,deckCountText.transform.position.y,Camera.main.nearClipPlane));
+        }
+
+        public Vector3 GetDiscardPos()
+        {
+            return Camera.main.ScreenToWorldPoint(discardPileText.transform.position);
+        }
+        
         private int maxCost;
         private int deckSize;
         private int discardSize;
@@ -28,6 +39,8 @@ namespace CardGame
         {
             maxCost = cost.Value;
             SetValue(cost.Value);
+            // Vector3 worldPoint;
+            // RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas.transform as RectTransform,canvas.worldCamera.WorldToScreenPoint(cube.transform.position),mainCamera,out worldpoint)
         }
 
         private void SetValue(int value)
@@ -57,12 +70,12 @@ namespace CardGame
             }
         }
 
-        public void RemoveCard()
+        public void RemoveDeckCard()
         {
             SetAmount(deckSize-1,DeckOrDiscard.deck);
         }
 
-        public void AddCard()
+        public void AddDiscardCard()
         {
             SetAmount(discardSize+1,DeckOrDiscard.discard);
         }

@@ -31,6 +31,11 @@ namespace CardGame
             return Utility.Text.Format("Assets/CardGame/Fonts/{0}.ttf", assetName);
         }
 
+        public static string GetCardIconAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/CardGame/Sprites/Cards/CardsIcon/{0}.png", assetName);
+        }
+
         public static string GetSceneAsset(string assetName)
         {
             return Utility.Text.Format("Assets/CardGame/Scenes/{0}.unity", assetName);

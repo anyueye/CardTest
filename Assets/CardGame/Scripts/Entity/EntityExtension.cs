@@ -11,6 +11,11 @@ namespace CardGame
     {
         private static int s_SerialId = 0;
 
+        public static void HideEntity(this EntityComponent entityComponent, Entity entity)
+        {
+            entityComponent.HideEntity(entity.Entity);
+        }
+        
         public static void ShowPlayer(this EntityComponent entityComponent, PlayerData data)
         {
             entityComponent.ShowEntity(typeof(PlayerLogic), "Player", Constant.AssetPriority.Player, data);

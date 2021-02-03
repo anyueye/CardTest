@@ -1,66 +1,79 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 
 namespace CardGame
 {
-    public class Card:Entity
+    public class Card : Entity
     {
         private CardData _cardData;
         public PlayerLogic playerLogic;
         private SpriteRenderer sr => GetComponent<SpriteRenderer>();
         private SpriteRenderer image;
-        private TextMeshPro name;
-        private TextMeshPro describe;
+        private TextMeshPro costText;
+        private TextMeshPro nameText;
+        private TextMeshPro typeText;
+        private TextMeshPro describeText;
+
+
+        public CardSelectionSystem css;
         private Vector3 onSelectCardPos = Vector3.zero;
-        [SerializeField] private CardState _cardState = CardState.onExit;
-        
+
+        public enum CardState
+        {
+            InHand,
+            AboutToBePlayed
+        }
+
+        public CardState State => currState;
+        private CardState currState;
+
         private SortingGroup sortingGroup;
         private Vector3 cachedPos;
         private Quaternion cachedRot;
         private int cachedSortingOrder;
         private int highlightedSortingOrder;
-        
+
+
+        private bool beingHighlighted;
+        private bool beingUnhighlighted;
 
         private bool interactable = false;
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
             sortingGroup = CachedTransform.GetComponent<SortingGroup>();
-            image = CachedTransform.Find("image").GetComponent<SpriteRenderer>();
-            name = CachedTransform.Find("name").GetComponent<TextMeshPro>();
-            describe = CachedTransform.Find("describe").GetComponent<TextMeshPro>();
 
+            image = CachedTransform.Find("PictureMask/image").GetComponent<SpriteRenderer>();
+            costText = CachedTransform.Find("CostText").GetComponent<TextMeshPro>();
+            nameText = CachedTransform.Find("NameText").GetComponent<TextMeshPro>();
+            typeText = CachedTransform.Find("TypeText").GetComponent<TextMeshPro>();
+            describeText = CachedTransform.Find("DescribeText").GetComponent<TextMeshPro>();
         }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
-            _cardData= userData as CardData;
-            
-            
-            name.text = _cardData.CardName;
-            // if (_cardData.Damage<0)
-            // {
-            //     describe.text = Utility.Text.Format(_cardData.Descirbe,_cardData.Recover);
-            //     return;
-            // }
-            //
-            // if (_cardData.Recover<0)
-            // {
-            //     describe.text = Utility.Text.Format(_cardData.Descirbe,_cardData.Damage);
-            //     return;
-            // }
-            // describe.text = Utility.Text.Format(_cardData.Descirbe,_cardData.Damage,_cardData.Recover);
-        }
+            _cardData = userData as CardData;
 
+            nameText.text = _cardData.CardName;
+            costText.text = _cardData.Cost.ToString();
+            image.sprite = _cardData.Icon;
+            describeText.text = _cardData.Description;
+        }
         
+
+
         public void SetInteractable(bool value)
         {
             interactable = value;
         }
-        
+
         public CardData CardData
         {
             get => _cardData;
@@ -72,6 +85,22 @@ namespace CardGame
             get => sortingGroup;
         }
 
+        public void SetState(CardState state)
+        {
+            currState = state;
+            switch (currState)
+            {
+                case CardState.InHand:
+                    // glow.color = inHandColor;
+                    break;
+
+                case CardState.AboutToBePlayed:
+                    // glow.color = aboutToBePlayedColor;
+                    break;
+            }
+        }
+
+
         public void CacheTransform(Vector3 position, Quaternion rotation)
         {
             cachedPos = position;
@@ -79,52 +108,65 @@ namespace CardGame
             cachedSortingOrder = sortingGroup.sortingOrder;
             highlightedSortingOrder = cachedSortingOrder + 10;
         }
-        
-        
-        private void OnMouseEnter()
-        {
-            if (_cardState != CardState.onExit) return;
-            _cardState = CardState.onHover;
-            transform.DOScale(Vector3.one * 1.2f, 0.2f);
-            transform.DOLocalMove(new Vector3(onSelectCardPos.x, sr.size.y * 0.1f, -0.1f), 0.2f);
-        }
 
-        private void OnMouseExit()
+        public void HighlightCard()
         {
-            if (_cardState == CardState.onHover)
+            if (css.HasSelectedCard())
             {
-                _cardState = CardState.onExit;
-                transform.DOScale(Vector3.one, 0.2f);
-                transform.DOLocalMove(onSelectCardPos, 0.2f);
-            }
-        }
-
-        private void OnMouseDown()
-        {
-            _cardState = CardState.onSelect;
-        }
-
-        private void OnMouseUp()
-        {
-            if (transform.position.y >onSelectCardPos.y+sr.size.y+0.2f)
-            {
-                transform.localScale=Vector3.one;
-                playerLogic.PushCard(this);
                 return;
             }
 
-            _cardState = CardState.onUnSelect;
-            transform.localPosition = onSelectCardPos;
-            transform.localScale = Vector3.one;
-            _cardState = CardState.onExit;
+            if (beingHighlighted)
+            {
+                return;
+            }
+
+            beingHighlighted = true;
+            sortingGroup.sortingOrder = highlightedSortingOrder;
+            transform.DOMove(cachedPos + new Vector3(0, 0.3f, 0), 0.05f).SetEase(Ease.OutCubic).OnComplete(() => beingHighlighted = false);
         }
 
-        private void OnMouseDrag()
+        public void UnHighlightCard()
         {
-            if (_cardState != CardState.onSelect) return;
-            var pos = Input.mousePosition;
-            pos.z = Mathf.Abs(transform.parent.position.z - Camera.main.transform.position.z) - 0.1f;
-            transform.position = Camera.main.ScreenToWorldPoint(pos);
+            if (css.HasSelectedCard())
+            {
+                return;
+            }
+
+            if (beingUnhighlighted)
+            {
+                return;
+            }
+
+            beingUnhighlighted = true;
+            sortingGroup.sortingOrder = cachedSortingOrder;
+            transform.DOMove(cachedPos, 0.02f).SetEase(Ease.OutCubic).OnComplete(() => beingUnhighlighted = false);
+        }
+
+        public void Reset(Action onComplete)
+        {
+            transform.DOMove(cachedPos, 0.2f);
+            transform.DORotateQuaternion(cachedRot, 0.2f);
+            sortingGroup.sortingOrder = cachedSortingOrder;
+            onComplete();
+        }
+
+
+        public void OnMouseEnter()
+        {
+            
+            if (interactable)
+            {
+                HighlightCard();
+            }
+        }
+
+        public void OnMouseExit()
+        {
+            if (interactable)
+            {
+                UnHighlightCard();
+            }
         }
     }
 }

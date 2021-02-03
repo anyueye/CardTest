@@ -21,7 +21,7 @@ namespace CardGame
             }
             CachedTransform.localPosition = m_EntityData.Position;
             CachedTransform.localRotation = Quaternion.identity;
-            CachedTransform.localScale = Vector3.one;
+            CachedTransform.localScale = m_EntityData.LocalScale;
         }
     }
 }

@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-01-29 15:43:10.971
+// 生成时间：2021-02-02 16:57:23.042
 //------------------------------------------------------------
 
 using GameFramework;
@@ -37,7 +37,7 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取。
+        /// 获取卡片名字。
         /// </summary>
         public string Name
         {
@@ -46,18 +46,18 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取描述。
+        /// 获取费用。
         /// </summary>
-        public string Describe
+        public int Cost
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取伤害。
+        /// 获取0=伤害卡，1=buff卡，2技能卡。
         /// </summary>
-        public float Damage
+        public int Type
         {
             get;
             private set;
@@ -66,7 +66,25 @@ namespace CardGame
         /// <summary>
         /// 获取。
         /// </summary>
-        public float Recover
+        public string Material
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public string Picture
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public List<int> Effects
         {
             get;
             private set;
@@ -85,9 +103,11 @@ namespace CardGame
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             Name = columnStrings[index++];
-            Describe = columnStrings[index++];
-            Damage = float.Parse(columnStrings[index++]);
-            Recover = float.Parse(columnStrings[index++]);
+            Cost = int.Parse(columnStrings[index++]);
+            Type = int.Parse(columnStrings[index++]);
+            Material = columnStrings[index++];
+            Picture = columnStrings[index++];
+            Effects = DataTableExtension.ParseList(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -101,9 +121,11 @@ namespace CardGame
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     Name = binaryReader.ReadString();
-                    Describe = binaryReader.ReadString();
-                    Damage = binaryReader.ReadSingle();
-                    Recover = binaryReader.ReadSingle();
+                    Cost = binaryReader.Read7BitEncodedInt32();
+                    Type = binaryReader.Read7BitEncodedInt32();
+                    Material = binaryReader.ReadString();
+                    Picture = binaryReader.ReadString();
+                    Effects = binaryReader.ReadList(2);
                 }
             }
 

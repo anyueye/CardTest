@@ -9,8 +9,10 @@ namespace CardGame
         [SerializeField] private int handLimit = 0;
         [SerializeField] private int defaultHp = 0;
         [SerializeField] private int defaultMp = 0;
-        [SerializeField] private int defaultPhysical = 0;
         [SerializeField] private List<int> defaultCards = new List<int>();
+
+        [SerializeField] private int m_MaxHP=0;
+        [SerializeField] private int m_Defense = 0;
         /// <summary>
         /// 当前局所有牌库
         /// </summary>
@@ -23,42 +25,66 @@ namespace CardGame
             {
                 return;
             }
-            handLimit = drPlayer.HandLimit;
-            defaultHp = drPlayer.HP;
-            defaultMp = drPlayer.MP;
-            defaultPhysical = drPlayer.Physical;
-            defaultCards = drPlayer.DefaultCards;
+            // handLimit = drPlayer.HandLimit;
+            // defaultHp = drPlayer.HP;
+            // defaultMp = drPlayer.MP;
+            // defaultPhysical = drPlayer.Physical;
+            // defaultCards = drPlayer.DefaultCards;
+            RefreshData(drPlayer);
             allCards.AddRange(defaultCards);
+            currentHP = m_MaxHP;
         }
 
+        /// <summary>
+        /// 初始手牌上限
+        /// </summary>
         public int HandLimit
         {
             get => handLimit;
             set => handLimit = value;
         }
 
+        /// <summary>
+        /// 最大HP
+        /// </summary>
         public override int MaxHP
         {
-            get => defaultHp;
-            set => defaultHp = value;
+            get => m_MaxHP;
+            set => m_MaxHP = value;
         }
-
+        
+        /// <summary>
+        /// 初始MP
+        /// </summary>
         public int DefaultMp
         {
             get => defaultMp;
             set => defaultMp = value;
         }
 
-        public int DefaultPhysical
-        {
-            get => defaultPhysical;
-            set => defaultPhysical = value;
-        }
-
+        // public int DefaultPhysical
+        // {
+        //     get => defaultPhysical;
+        //     set => defaultPhysical = value;
+        // }
+        /// <summary>
+        /// 初始卡组
+        /// </summary>
         public List<int> DefaultCards
         {
             get => defaultCards;
             set => defaultCards = value;
+        }
+
+        private void RefreshData(DRCharacters pd)
+        {
+            m_MaxHP = 0;
+            m_Defense = 0;
+            m_MaxHP += pd.HP;
+            if (currentHP>m_MaxHP)
+            {
+                currentHP = m_MaxHP;
+            }
         }
     }
 }

@@ -4,13 +4,12 @@ namespace CardGame
 {
     public class EntityData
     {
-        [SerializeField]
-        private int m_Id = 0;
+        [SerializeField] private int m_Id = 0;
 
-        [SerializeField]
-        private int m_TypeId = 0;
-        [SerializeField]
-        private Vector3 m_Position = Vector3.zero;
+        [SerializeField] private int m_TypeId = 0;
+        [SerializeField] private Vector3 m_Position = Vector3.zero;
+
+        [SerializeField] private Vector3 m_LocalScale = Vector3.one;
 
 
         public EntityData(int entityId, int typeId)
@@ -18,6 +17,7 @@ namespace CardGame
             m_Id = entityId;
             m_TypeId = typeId;
         }
+
         /// <summary>
         /// entity 实时 id
         /// </summary>
@@ -25,6 +25,7 @@ namespace CardGame
         {
             get => m_Id;
         }
+
         /// <summary>
         /// entity 预制体ID
         /// </summary>
@@ -32,19 +33,20 @@ namespace CardGame
         {
             get => m_TypeId;
         }
+
         /// <summary>
         /// 实体位置。
         /// </summary>
         public Vector3 Position
         {
-            get
-            {
-                return m_Position;
-            }
-            set
-            {
-                m_Position = value;
-            }
+            get { return m_Position; }
+            set { m_Position = value; }
+        }
+
+        public Vector3 LocalScale
+        {
+            get => m_LocalScale;
+            set => m_LocalScale = value;
         }
     }
 }
