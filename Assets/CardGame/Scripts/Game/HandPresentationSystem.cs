@@ -133,7 +133,7 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 计算手牌位置
+        /// 计算手牌位置 Arrange:vt. 排列
         /// </summary>
         private void ArrangeHandCrads()
         {
@@ -156,7 +156,10 @@ namespace CardGame
                 sortingOrders.Add(i);
             }
         }
-
+        /// <summary>
+        /// 删除特定牌后从新排列手牌   Rearrange:vt. 重新安排, 重新布置
+        /// </summary>
+        /// <param name="c"></param>
         public void RearrangeHand(Card c)
         {
             handCards.Remove(c);
