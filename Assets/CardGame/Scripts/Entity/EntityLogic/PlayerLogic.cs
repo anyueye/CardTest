@@ -31,10 +31,32 @@ namespace CardGame
         }
 
 
+        public override ImpactData GetImpactData()
+        {
+            return new ImpactData(m_PlayerData.currentHP,0,0);
+        }
+
+        public override void ApplyDamage(Entity attacker, int damage)
+        {
+            base.ApplyDamage(attacker, damage);
+            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
+        }
+
+        public override void HealthHp(Entity healther, int hp)
+        {
+            base.HealthHp(healther, hp);
+            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
+        }
+
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
             m_PlayerData = userData as PlayerData;
+            if (m_PlayerData==null)
+            {
+                return;
+            }
+            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
         }
     }
 }

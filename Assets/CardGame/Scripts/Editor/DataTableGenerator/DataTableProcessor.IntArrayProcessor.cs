@@ -31,8 +31,12 @@ namespace CardGame.Editor.DataTableTools
 
             public override List<int> Parse(string value)
             {
-                string[] splitedValue = value.Split(',');
                 List<int> temp = new List<int>();
+                if (value=="null")
+                {
+                    return temp;
+                }
+                string[] splitedValue = value.Split(',');
                 foreach (var t in splitedValue)
                 {
                     temp.Add(int.Parse(t));;

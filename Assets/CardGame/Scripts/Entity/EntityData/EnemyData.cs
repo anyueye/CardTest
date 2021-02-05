@@ -2,11 +2,18 @@
 
 namespace CardGame
 {
-    public class EnemyData:EntityData
+    public class EnemyData:TargetableObjectData
     {
         [SerializeField] private string _enemyName;
-        [SerializeField] private int _hp;
         [SerializeField] private int _defaultAtk;
+        [SerializeField] private int _shield;
+
+        public int Shield
+        {
+            get => _shield;
+            set => _shield = value;
+        }
+
         [SerializeField] private int _features;
         public EnemyData(int entityId, int typeId) : base(entityId, typeId)
         {
@@ -17,7 +24,7 @@ namespace CardGame
                 return;
             }
             _enemyName = drEnemy.Name;
-            _hp = drEnemy.HP;
+            currentHP = drEnemy.HP;
             _defaultAtk = drEnemy.Atk;
             _features = drEnemy.Features;
         }
@@ -27,12 +34,7 @@ namespace CardGame
             get => _enemyName;
             set => _enemyName = value;
         }
-
-        public int Hp
-        {
-            get => _hp;
-            set => _hp = value;
-        }
+        
 
         public int DefaultAtk
         {
@@ -45,5 +47,7 @@ namespace CardGame
             get => _features;
             set => _features = value;
         }
+
+        public override int MaxHP { get; set; }
     }
 }

@@ -9,9 +9,9 @@
 
         public static bool CardHastargetableEffect(Card c)
         {
-            foreach (var effect in c.CardData.Target)
+            foreach (var effect in c.CardData.CardEffectDatas)
             {
-                if (effect==CardData.CardTarget.Target)
+                if (effect.Target==EffectTargetType.TargetEnemy)
                 {
                     return true;
                 }

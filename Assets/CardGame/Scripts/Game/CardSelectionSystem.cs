@@ -9,6 +9,7 @@ namespace CardGame
     {
         public TargetingArrow _targetingArrow;
 
+        public EffectResolutionSystem effectResolutionSystem;
         public DeckDrawingSystem DeckDrawingSystem;
         public HandPresentationSystem HandPresentationSystem;
 
@@ -20,7 +21,7 @@ namespace CardGame
         private Entity SelectedCard;
         private bool cardHasTargetable;
 
-        private Entity selectEnemy;
+        private TargetableObject selectEnemy;
 
 
         private Vector3 prevClickPos;
@@ -139,8 +140,6 @@ namespace CardGame
                 }
                 else
                 {
-                    originalCardPos = card.CachedTransform.position;
-                    originalCardRot = card.CachedTransform.rotation;
                     originalCardSortingOrder = card.CardSortingGroup.sortingOrder;
                 }
             }
@@ -151,12 +150,12 @@ namespace CardGame
         /// </summary>
         private void DetectEnemySelection()
         {
-            if (SelectedCard == null) return;
+            if (SelectedCard == null|| !cardHasTargetable) return;
             var mousePos = MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             var hitInfo = Physics2D.Raycast(mousePos, Vector3.forward, Mathf.Infinity, EnemyLayer);
             if (hitInfo.collider != null)
             {
-                selectEnemy = hitInfo.collider.GetComponent<Entity>();
+                selectEnemy = hitInfo.collider.GetComponent<TargetableObject>();
                 PlaySelectedCard();
 
                 SelectedCard = null;
@@ -185,18 +184,9 @@ namespace CardGame
                 }
                 else
                 {
-                    var seq = DOTween.Sequence();
-                    seq.AppendCallback(() =>
+                    card.SetState(Card.CardState.InHand);
+                    card.Reset(() =>
                     {
-                        card.SetState(Card.CardState.InHand);
-                        SelectedCard.CachedTransform
-                            .DOMove(originalCardPos, CardSelectionCanceledAnimationTime)
-                            .SetEase(Ease.OutBack);
-                        SelectedCard.CachedTransform.DORotate(originalCardRot.eulerAngles, CardSelectionCanceledAnimationTime);
-                    });
-                    seq.OnComplete(() =>
-                    {
-                        card.CardSortingGroup.sortingOrder = originalCardSortingOrder;
                         SelectedCard = null;
                     });
                 }
@@ -241,7 +231,7 @@ namespace CardGame
                     isCardAboutToBePlayed = true;
 
                     var seq = DOTween.Sequence();
-                    seq.Append(SelectedCard.transform
+                    seq.Append(SelectedCard.CachedTransform
                         .DOMove(Vector3.zero, CardAnimationTime)
                         .SetEase(Ease.OutBack));
                     seq.AppendInterval(CardAnimationTime + 0.1f);
@@ -289,6 +279,9 @@ namespace CardGame
             HandPresentationSystem.MoveCardToDiscardPile(card);
 
             DeckDrawingSystem.MoveCardToDiscardPile(card.Id);
+            
+            effectResolutionSystem.ResolveCardEffects(card,selectEnemy);
+            
         }
 
         public bool HasSelectedCard()

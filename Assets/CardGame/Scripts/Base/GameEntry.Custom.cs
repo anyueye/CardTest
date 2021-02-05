@@ -7,6 +7,11 @@
         //     get;
         //     private set;
         // }
+        public static HPBarComponent hpBar
+        {
+            get;
+            private set;
+        }
         public static TargetingArrow targetingArrow
         {
             get;
@@ -16,6 +21,7 @@
         private static void InitCustomCompontns()
         {
             targetingArrow = UnityGameFramework.Runtime.GameEntry.GetComponent<TargetingArrow>();
+            hpBar = UnityGameFramework.Runtime.GameEntry.GetComponent<HPBarComponent>();
         }
     }
 }

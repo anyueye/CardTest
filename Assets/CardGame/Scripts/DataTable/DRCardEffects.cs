@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-02 16:57:23.108
+// 生成时间：2021-02-05 15:01:05.467
 //------------------------------------------------------------
 
 using GameFramework;
@@ -63,6 +63,33 @@ namespace CardGame
             private set;
         }
 
+        /// <summary>
+        /// 获取反射方法。
+        /// </summary>
+        public string Effect
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取对自己特效。
+        /// </summary>
+        public List<int> SourceActions
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取对目标特效。
+        /// </summary>
+        public List<int> TargetActions
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -78,10 +105,9 @@ namespace CardGame
             Describe = columnStrings[index++];
             Target = int.Parse(columnStrings[index++]);
             Value = int.Parse(columnStrings[index++]);
-            index++;
-            index++;
-            index++;
-            index++;
+            Effect = columnStrings[index++];
+            SourceActions = DataTableExtension.ParseList(columnStrings[index++]);
+            TargetActions = DataTableExtension.ParseList(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -97,6 +123,9 @@ namespace CardGame
                     Describe = binaryReader.ReadString();
                     Target = binaryReader.Read7BitEncodedInt32();
                     Value = binaryReader.Read7BitEncodedInt32();
+                    Effect = binaryReader.ReadString();
+                    SourceActions = binaryReader.ReadList(4);
+                    TargetActions = binaryReader.ReadList(4);
                 }
             }
 

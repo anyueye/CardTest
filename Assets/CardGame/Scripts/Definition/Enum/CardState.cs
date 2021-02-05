@@ -1,10 +1,10 @@
 ﻿namespace CardGame
 {
-    public enum CardState
+    public enum EffectTargetType
     {
-        onHover,
-        onSelect,
-        onUnSelect,
-        onExit,
+        Self=0,
+        TargetEnemy,
+        AllEnemies,
+        All
     }
 }

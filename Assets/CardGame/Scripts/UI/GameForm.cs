@@ -16,6 +16,8 @@ namespace CardGame
             discard
         }
         
+        
+        
         [SerializeField] private TextMeshProUGUI costText;
         [SerializeField] private TextMeshProUGUI deckCountText;
         [SerializeField] private TextMeshProUGUI discardPileText;
@@ -39,8 +41,6 @@ namespace CardGame
         {
             maxCost = cost.Value;
             SetValue(cost.Value);
-            // Vector3 worldPoint;
-            // RectTransformUtility.ScreenPointToWorldPointInRectangle(canvas.transform as RectTransform,canvas.worldCamera.WorldToScreenPoint(cube.transform.position),mainCamera,out worldpoint)
         }
 
         private void SetValue(int value)
@@ -79,17 +79,30 @@ namespace CardGame
         {
             SetAmount(discardSize+1,DeckOrDiscard.discard);
         }
-        
-        
-        
+
+
+        private GameBase _gameBase;
         
         
         protected override void OnOpen(object userData)
         {
             base.OnOpen(userData);
-            var tes= GameEntry.UI.GetUIForm(UIFormId.GameForm) as GameForm;
-            tes.SetAmount(5,DeckOrDiscard.deck);
-            Log.Info(tes);
+            _gameBase = userData as GameBase;
+            if (_gameBase==null)
+            {
+                return;
+            }
+            endTurnButton.onClick.AddListener(OnEndBtnPressed);
+        }
+
+        void OnEndBtnPressed()
+        {
+            endTurnButton.interactable = false;
+            _gameBase.gameTurn = GameTurn.PlayerTurnEnd;
+        }
+        public void OnPlayerTurnBegan()
+        {
+            endTurnButton.interactable = true;
         }
 
         protected override void OnClose(bool isShutdown, object userData)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GameFramework;
 using GameFramework.Resource;
@@ -16,22 +17,18 @@ namespace CardGame
             Skill,
         }
 
-        public enum CardTarget
-        {
-            Self = 0,
-            Target,
-            AllTarget,
-            All
-        }
+        
 
-        [SerializeField] private int _cardId;
-        [SerializeField] private string _cardName;
+        [SerializeField] private readonly int _cardId;
+        [SerializeField] private readonly string _cardName;
         [SerializeField] private int _cost;
         [SerializeField] private Material _material;
         [SerializeField] private Sprite _icon;
-        [SerializeField] private CardType _type;
-        [SerializeField] private List<CardTarget> _target = new List<CardTarget>();
-        [SerializeField] private string _description;
+        [SerializeField] private readonly CardType _type;
+        [SerializeField] private readonly string _description;
+        [SerializeField] private readonly List<CardEffectData> _cardEffectDatas = new List<CardEffectData>();
+
+        public IEnumerable<CardEffectData> CardEffectDatas => _cardEffectDatas;
 
 
         public CardData(int entityId, int typeId, int cardID) : base(entityId, typeId)
@@ -45,12 +42,12 @@ namespace CardGame
 
             var dtCardeffects = GameEntry.DataTable.GetDataTable<DRCardEffects>();
             var builder = new StringBuilder();
-            for (int i = 0; i < drCard.Effects.Count; i++)
+            foreach (var effect in drCard.Effects.Select(t => new CardEffectData(t)))
             {
-                var effectId = drCard.Effects[i];
-                builder.Append(Utility.Text.Format(dtCardeffects[effectId].Describe, dtCardeffects[effectId].Value));
-                _target.Add((CardTarget) dtCardeffects[effectId].Target);
+                _cardEffectDatas.Add(effect);
+                builder.Append(effect.Describe);
             }
+            
 
             _cardId = cardID;
             _cardName = drCard.Name;
@@ -77,13 +74,11 @@ namespace CardGame
         public int CardId
         {
             get => _cardId;
-            set => _cardId = value;
         }
 
         public string CardName
         {
             get => _cardName;
-            set => _cardName = value;
         }
 
         public int Cost
@@ -107,19 +102,11 @@ namespace CardGame
         public CardType Type
         {
             get => _type;
-            set => _type = value;
         }
-
-        public List<CardTarget> Target
-        {
-            get => _target;
-            set => _target = value;
-        }
-
+        
         public string Description
         {
             get => _description;
-            set => _description = value;
         }
     }
 }

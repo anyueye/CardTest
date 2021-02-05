@@ -17,7 +17,7 @@ namespace CardGame
         /// 当前局所有牌库
         /// </summary>
         public List<int> allCards = new List<int>();
-        public PlayerData(int entityId, int typeId) : base(entityId, typeId, CampType.Player)
+        public PlayerData(int entityId, int typeId) : base(entityId, typeId)
         {
             var dtPlayer = GameEntry.DataTable.GetDataTable<DRCharacters>();
             var drPlayer = dtPlayer.GetDataRow(typeId);

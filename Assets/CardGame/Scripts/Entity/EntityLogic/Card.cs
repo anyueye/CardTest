@@ -66,7 +66,6 @@ namespace CardGame
             image.sprite = _cardData.Icon;
             describeText.text = _cardData.Description;
         }
-        
 
 
         public void SetInteractable(bool value)
@@ -123,7 +122,7 @@ namespace CardGame
 
             beingHighlighted = true;
             sortingGroup.sortingOrder = highlightedSortingOrder;
-            transform.DOMove(cachedPos + new Vector3(0, 0.3f, 0), 0.05f).SetEase(Ease.OutCubic).OnComplete(() => beingHighlighted = false);
+            CachedTransform.DOMove(cachedPos + new Vector3(0, 0.3f, 0), 0.05f).SetEase(Ease.OutCubic).OnComplete(() => beingHighlighted = false);
         }
 
         public void UnHighlightCard()
@@ -140,13 +139,16 @@ namespace CardGame
 
             beingUnhighlighted = true;
             sortingGroup.sortingOrder = cachedSortingOrder;
-            transform.DOMove(cachedPos, 0.02f).SetEase(Ease.OutCubic).OnComplete(() => beingUnhighlighted = false);
+            CachedTransform.DOMove(cachedPos, 0.02f).SetEase(Ease.OutCubic).OnComplete(() => beingUnhighlighted = false);
         }
 
         public void Reset(Action onComplete)
         {
-            transform.DOMove(cachedPos, 0.2f);
-            transform.DORotateQuaternion(cachedRot, 0.2f);
+            interactable = false;
+            var seq = DOTween.Sequence();
+            seq.Append(CachedTransform.DOMove(cachedPos, 0.2f));
+            seq.Insert(0, CachedTransform.DORotateQuaternion(cachedRot, 0.2f));
+            seq.OnComplete(() => interactable = true);
             sortingGroup.sortingOrder = cachedSortingOrder;
             onComplete();
         }
@@ -154,7 +156,6 @@ namespace CardGame
 
         public void OnMouseEnter()
         {
-            
             if (interactable)
             {
                 HighlightCard();
@@ -168,5 +169,6 @@ namespace CardGame
                 UnHighlightCard();
             }
         }
+        
     }
 }

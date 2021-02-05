@@ -1,4 +1,5 @@
-﻿using UnityGameFramework.Runtime;
+﻿using System;
+using UnityGameFramework.Runtime;
 
 namespace CardGame
 {
@@ -8,6 +9,22 @@ namespace CardGame
         public override void Update(float elapseSeconds, float realElapseSecondes)
         {
             base.Update(elapseSeconds, realElapseSecondes);
+            switch (gameTurn)
+            {
+                case GameTurn.None:
+                    break;
+                case GameTurn.PlayerTurnBegan:
+                    break;
+                case GameTurn.PlayerTurnEnd:
+                    gameTurn = GameTurn.EnemyTurnBegan;
+                    break;
+                case GameTurn.EnemyTurnBegan:
+                    break;
+                case GameTurn.EnemyTurnEnd:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

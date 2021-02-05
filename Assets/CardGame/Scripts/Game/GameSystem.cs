@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace CardGame
 {
     public class GameSystem:SystemBase
     {
         protected GameForm gameUI;
+
+        public TargetableObject player;
+        public List<TargetableObject> enemys=new List<TargetableObject>();
         
         public void SetUI(UGuiForm ui)
         {
