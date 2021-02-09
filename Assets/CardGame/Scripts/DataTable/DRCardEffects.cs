@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-05 15:01:05.467
+// 生成时间：2021-02-07 10:33:02.645
 //------------------------------------------------------------
 
 using GameFramework;
@@ -124,8 +124,8 @@ namespace CardGame
                     Target = binaryReader.Read7BitEncodedInt32();
                     Value = binaryReader.Read7BitEncodedInt32();
                     Effect = binaryReader.ReadString();
-                    SourceActions = binaryReader.ReadList(4);
-                    TargetActions = binaryReader.ReadList(4);
+                    SourceActions = binaryReader.ReadList(3);
+                    TargetActions = binaryReader.ReadList(3);
                 }
             }
 

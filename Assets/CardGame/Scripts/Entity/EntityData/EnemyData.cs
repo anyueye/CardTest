@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace CardGame
 {
@@ -7,14 +8,14 @@ namespace CardGame
         [SerializeField] private string _enemyName;
         [SerializeField] private int _defaultAtk;
         [SerializeField] private int _shield;
-
+        [SerializeField] private int _maxHp;
         public int Shield
         {
             get => _shield;
             set => _shield = value;
         }
 
-        [SerializeField] private int _features;
+        [SerializeField] private List<int> defaultSkill;
         public EnemyData(int entityId, int typeId) : base(entityId, typeId)
         {
             var dtEnemy = GameEntry.DataTable.GetDataTable<DREnemy>();
@@ -24,10 +25,13 @@ namespace CardGame
                 return;
             }
             _enemyName = drEnemy.Name;
-            currentHP = drEnemy.HP;
-            _defaultAtk = drEnemy.Atk;
-            _features = drEnemy.Features;
+            MaxHP = Random.Range(drEnemy.HpMin, drEnemy.HpMax + 1);
+            _defaultAtk = Random.Range(drEnemy.AtkMin,drEnemy.AtkMax);
+            defaultSkill = drEnemy.Skill;
+            currentHP=_maxHp;
         }
+        
+        public void AttachSkill(){}
 
         public string EnemyName
         {
@@ -40,12 +44,6 @@ namespace CardGame
         {
             get => _defaultAtk;
             set => _defaultAtk = value;
-        }
-
-        public int Features
-        {
-            get => _features;
-            set => _features = value;
         }
 
         public override int MaxHP { get; set; }

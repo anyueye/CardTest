@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameFramework.DataTable;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -54,5 +55,18 @@ namespace CardGame
             }
             return temp;
         }
+        
+        public static List<string> ParseStrList(string value)
+        {
+            List<string> temp = new List<string>();
+            if (value=="null")
+            {
+                return temp;
+            }
+            string[] splitedValue = value.Split(',');
+            return splitedValue.ToList();
+        }
+        
+        
     }
 }

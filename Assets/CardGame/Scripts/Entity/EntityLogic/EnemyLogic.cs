@@ -26,7 +26,7 @@ namespace CardGame
                 Log.Error("EnemyData is invalid.");
                 return;
             }
-            GameEntry.hpBar.ShowHPBar(this,_enemyData.currentHP,0);
+            GameEntry.hpBar.ShowHPBar(this,_enemyData.MaxHP,0);
         }
         
         

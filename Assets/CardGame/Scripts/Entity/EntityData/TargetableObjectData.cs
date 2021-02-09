@@ -19,10 +19,6 @@ namespace CardGame
         }
 
         public abstract int MaxHP { get; set; }
-
-        public float HPRatio
-        {
-            get => MaxHP > 0 ? (float) currentHP / MaxHP : 0;
-        }
+        
     }
 }

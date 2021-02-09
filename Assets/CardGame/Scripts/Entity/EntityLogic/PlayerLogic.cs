@@ -56,7 +56,7 @@ namespace CardGame
             {
                 return;
             }
-            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
+            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.MaxHP,0);
         }
     }
 }

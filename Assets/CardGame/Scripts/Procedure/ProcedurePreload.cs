@@ -17,9 +17,12 @@ namespace CardGame
             "Characters",
             "Entity",
             "Enemy",
-            "Features",
+            "Status",
             "UIForm",
-            "CardEffects"
+            "CardEffects",
+            "EnemyPattern",
+            
+            
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

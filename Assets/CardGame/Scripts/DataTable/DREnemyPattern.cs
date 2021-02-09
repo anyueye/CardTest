@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-07 10:33:02.632
+// 生成时间：2021-02-07 10:33:02.648
 //------------------------------------------------------------
 
 using GameFramework;
@@ -21,7 +21,7 @@ namespace CardGame
     /// <summary>
     /// 测试。
     /// </summary>
-    public class DREnemy : DataRowBase
+    public class DREnemyPattern : DataRowBase
     {
         private int m_Id = 0;
 
@@ -37,54 +37,27 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取名称。
+        /// 获取特性名称。
         /// </summary>
-        public string Name
+        public string FeaturesName
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取初始生命下限。
+        /// 获取特性图片id。
         /// </summary>
-        public int HpMin
+        public string Icon
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取初始生命上限。
+        /// 获取数值。
         /// </summary>
-        public int HpMax
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取初始攻击下限。
-        /// </summary>
-        public int AtkMin
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取初始攻击上限。
-        /// </summary>
-        public int AtkMax
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取默认攻击手段。
-        /// </summary>
-        public List<int> Skill
+        public int Value
         {
             get;
             private set;
@@ -102,12 +75,9 @@ namespace CardGame
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            Name = columnStrings[index++];
-            HpMin = int.Parse(columnStrings[index++]);
-            HpMax = int.Parse(columnStrings[index++]);
-            AtkMin = int.Parse(columnStrings[index++]);
-            AtkMax = int.Parse(columnStrings[index++]);
-            Skill = DataTableExtension.ParseList(columnStrings[index++]);
+            FeaturesName = columnStrings[index++];
+            Icon = columnStrings[index++];
+            Value = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -120,12 +90,9 @@ namespace CardGame
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    Name = binaryReader.ReadString();
-                    HpMin = binaryReader.Read7BitEncodedInt32();
-                    HpMax = binaryReader.Read7BitEncodedInt32();
-                    AtkMin = binaryReader.Read7BitEncodedInt32();
-                    AtkMax = binaryReader.Read7BitEncodedInt32();
-                    Skill = binaryReader.ReadList(3);
+                    FeaturesName = binaryReader.ReadString();
+                    Icon = binaryReader.ReadString();
+                    Value = binaryReader.Read7BitEncodedInt32();
                 }
             }
 
