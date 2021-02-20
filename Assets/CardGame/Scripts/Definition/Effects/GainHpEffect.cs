@@ -2,11 +2,12 @@
 
 namespace CardGame
 {
-    public class GainHpEffect:TargetableEffect
+    public class GainHpEffect:IntegerEffect
     {
-        public GainHpEffect(int value)
+        public GainHpEffect(int value,EffectTargetType target_)
         {
-            _value = value;
+            Target = target_;
+            Value = value;
         }
 
         /// <summary>
@@ -17,7 +18,7 @@ namespace CardGame
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
             ImpactData targetImpactData = target.GetImpactData();
-            int damage = HealthHp(_value);
+            int damage = HealthHp(Value);
             target.ApplyDamage(instigator,damage);
         }
         

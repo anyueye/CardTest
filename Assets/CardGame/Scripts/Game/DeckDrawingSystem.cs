@@ -31,6 +31,9 @@ namespace CardGame
 
         public override void Shutdown()
         {
+            deckPile.Clear();
+            discardPile.Clear();
+            handPile.Clear();
             base.Shutdown();
         }
         
@@ -68,6 +71,7 @@ namespace CardGame
                     }
 
                     handPresentatation.CreateCardInHand(drawnCards, prevDeckSize);
+                    GameEntry.Event.Fire(this,);
                 }
                 else
                 {

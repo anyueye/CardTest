@@ -1,11 +1,12 @@
 ﻿namespace CardGame
 {
-    public class DealDamageEffect:TargetableEffect
+    public class DealDamageEffect:IntegerEffect
     {
 
-        public DealDamageEffect(int value)
+        public DealDamageEffect(int value,EffectTargetType target_)
         {
-            _value = value;
+            Target = target_;
+            Value = value;
         }
         
         /// <summary>
@@ -16,7 +17,7 @@
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
             ImpactData targetImpactData = target.GetImpactData();
-            int damage = CalcDamageHp(_value, targetImpactData.Shield);
+            int damage = CalcDamageHp(Value, targetImpactData.Shield);
             target.ApplyDamage(instigator,damage);
         }
 

@@ -13,13 +13,13 @@ namespace CardGame
         public void ResolveCardEffects(Card c,TargetableObject target)
         {
             //获取当前卡牌所有行为，每个行为单独释放效果
-            foreach (var effect in c.CardData.CardEffectDatas)
+            foreach (var effect in c.CardData.Effects)
             {
                 //获取当前卡牌释放目标
                 var targets = GetTargets(effect.Target, target);
                 foreach (var entity in targets)
                 {
-                    (effect.effect).Resolve(player,entity);
+                    effect.Resolve(player,entity);
                 }
             }
         }

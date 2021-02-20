@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-07 10:33:02.648
+// 生成时间：2021-02-19 16:32:42.167
 //------------------------------------------------------------
 
 using GameFramework;
@@ -39,7 +39,7 @@ namespace CardGame
         /// <summary>
         /// 获取特性名称。
         /// </summary>
-        public string FeaturesName
+        public string PatternName
         {
             get;
             private set;
@@ -63,6 +63,33 @@ namespace CardGame
             private set;
         }
 
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public string Effect
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public List<int> SourceActions
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public List<int> TargetActions
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -75,9 +102,12 @@ namespace CardGame
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            FeaturesName = columnStrings[index++];
+            PatternName = columnStrings[index++];
             Icon = columnStrings[index++];
             Value = int.Parse(columnStrings[index++]);
+            Effect = columnStrings[index++];
+            SourceActions = DataTableExtension.ParseList(columnStrings[index++]);
+            TargetActions = DataTableExtension.ParseList(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -90,9 +120,12 @@ namespace CardGame
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    FeaturesName = binaryReader.ReadString();
+                    PatternName = binaryReader.ReadString();
                     Icon = binaryReader.ReadString();
                     Value = binaryReader.Read7BitEncodedInt32();
+                    Effect = binaryReader.ReadString();
+                    SourceActions = binaryReader.ReadList(3);
+                    TargetActions = binaryReader.ReadList(3);
                 }
             }
 

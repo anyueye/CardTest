@@ -8,6 +8,11 @@ namespace CardGame
     {
         [SerializeField] private PlayerData m_PlayerData = null;
 
+        public PlayerData PlayerData
+        {
+            get => m_PlayerData;
+        }
+
 
         protected override void OnInit(object userData)
         {

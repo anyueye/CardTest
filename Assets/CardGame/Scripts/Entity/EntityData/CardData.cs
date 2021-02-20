@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameFramework;
@@ -17,7 +18,6 @@ namespace CardGame
             Skill,
         }
 
-        
 
         [SerializeField] private readonly int _cardId;
         [SerializeField] private readonly string _cardName;
@@ -26,9 +26,16 @@ namespace CardGame
         [SerializeField] private Sprite _icon;
         [SerializeField] private readonly CardType _type;
         [SerializeField] private readonly string _description;
-        [SerializeField] private readonly List<CardEffectData> _cardEffectDatas = new List<CardEffectData>();
 
-        public IEnumerable<CardEffectData> CardEffectDatas => _cardEffectDatas;
+        readonly List<IntegerEffect> _effects = new List<IntegerEffect>();
+
+        public IEnumerable<IntegerEffect> Effects
+        {
+            get => _effects;
+        }
+
+
+        // public IEnumerable<CardEffectData> CardEffectDatas => _cardEffectDatas;
 
 
         public CardData(int entityId, int typeId, int cardID) : base(entityId, typeId)
@@ -40,14 +47,20 @@ namespace CardGame
                 return;
             }
 
-            var dtCardeffects = GameEntry.DataTable.GetDataTable<DRCardEffects>();
-            var builder = new StringBuilder();
-            foreach (var effect in drCard.Effects.Select(t => new CardEffectData(t)))
+            string effName;
+            List<int> values = new List<int>();
+            for (int index = 0; index < drCard.EffectCount && (effName = drCard.GetEffectAt(index)) != "null"; index++)
             {
-                _cardEffectDatas.Add(effect);
-                builder.Append(effect.Describe);
+                var eff = Utility.Assembly.GetType($"CardGame.{effName}");
+                var value = drCard.GetValueAt(index);
+                EffectTargetType targetType = (EffectTargetType) drCard.GetTargetAt(index);
+                var effect = (IntegerEffect) Activator.CreateInstance(eff, value, targetType);
+                _effects.Add(effect);
+                if (value > 0)
+                {
+                    values.Add(value);
+                }
             }
-            
 
             _cardId = cardID;
             _cardName = drCard.Name;
@@ -57,7 +70,7 @@ namespace CardGame
             {
             }
 
-            GameEntry.Resource.LoadAsset(AssetUtility.GetCardIconAsset(drCard.Picture),typeof(Sprite), Constant.AssetPriority.DictionaryAsset, new LoadAssetCallbacks(
+            GameEntry.Resource.LoadAsset(AssetUtility.GetCardIconAsset(drCard.Picture), typeof(Sprite), Constant.AssetPriority.DictionaryAsset, new LoadAssetCallbacks(
                 (assetName, asset, duration, userData) =>
                 {
                     Log.Info("Load Sprite '{0}' OK.", assetName);
@@ -67,7 +80,9 @@ namespace CardGame
                 {
                     Log.Error("Can not load font '{0}' from '{1}' with error message '{2}'.", drCard.Picture, assetName, errorMessage);
                 }));
-            _description = builder.ToString();
+            
+            object[] temp = Array.ConvertAll<int, object>(values.ToArray(), input => input);
+            _description = string.Format(drCard.Describe, temp);
         }
 
 
@@ -103,7 +118,7 @@ namespace CardGame
         {
             get => _type;
         }
-        
+
         public string Description
         {
             get => _description;

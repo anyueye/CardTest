@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-07 10:33:02.625
+// 生成时间：2021-02-19 16:32:42.149
 //------------------------------------------------------------
 
 using GameFramework;
@@ -125,7 +125,7 @@ namespace CardGame
                     MP = binaryReader.Read7BitEncodedInt32();
                     Physical = binaryReader.Read7BitEncodedInt32();
                     HandLimit = binaryReader.Read7BitEncodedInt32();
-                    DefaultCards = binaryReader.ReadList(4);
+                    DefaultCards = binaryReader.ReadList(5);
                 }
             }
 

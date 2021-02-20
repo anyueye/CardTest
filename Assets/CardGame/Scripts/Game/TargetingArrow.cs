@@ -6,7 +6,7 @@ using UnityGameFramework.Runtime;
 namespace CardGame
 {
     /// <summary>
-    /// The targeting arrow that allows the player to select an enemy as the target of
+    /// The targeting arrow that allows the player to select an enemy as the Target of
     /// the current card effect.
     /// </summary>
     public class TargetingArrow : GameFrameworkComponent

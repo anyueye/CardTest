@@ -2,7 +2,7 @@
 {
     public abstract class TargetableEffect:Effect
     {
-        public int _value;
+        public EffectTargetType Target;
         public abstract void Resolve(TargetableObject instigator, TargetableObject target);
     }
 }

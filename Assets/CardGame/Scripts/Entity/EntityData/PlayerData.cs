@@ -25,12 +25,8 @@ namespace CardGame
             {
                 return;
             }
-            // handLimit = drPlayer.HandLimit;
-            // defaultHp = drPlayer.HP;
-            // defaultMp = drPlayer.MP;
-            // defaultPhysical = drPlayer.Physical;
-            // defaultCards = drPlayer.DefaultCards;
             RefreshData(drPlayer);
+            defaultCards.AddRange(drPlayer.DefaultCards);
             allCards.AddRange(defaultCards);
             currentHP = m_MaxHP;
         }

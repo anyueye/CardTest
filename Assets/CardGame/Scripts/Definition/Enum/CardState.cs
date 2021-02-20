@@ -4,6 +4,7 @@
     {
         Self=0,
         TargetEnemy,
+        RandomEnemy,
         AllEnemies,
         All
     }

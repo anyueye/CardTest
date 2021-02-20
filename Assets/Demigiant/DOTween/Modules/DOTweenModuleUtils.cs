@@ -143,8 +143,8 @@ namespace DG.Tweening
                 }
 #else
                 t = isLocal
-                    ? target.transform.DOLocalPath(path, duration, pathMode)
-                    : target.transform.DOPath(path, duration, pathMode);
+                    ? Target.transform.DOLocalPath(path, duration, pathMode)
+                    : Target.transform.DOPath(path, duration, pathMode);
 #endif
                 return t;
             }
