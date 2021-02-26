@@ -1,4 +1,6 @@
-﻿namespace CardGame
+﻿using UnityEngine;
+
+namespace CardGame
 {
     public class DealDamageEffect:IntegerEffect
     {
@@ -12,10 +14,11 @@
         /// <summary>
         /// 对目标造成伤害
         /// </summary>
-        /// <param name="instigator">自己</param>
+        /// <param name="instigator">发起者</param>
         /// <param name="target">目标</param>
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
+            Debug.Log("Deal");
             ImpactData targetImpactData = target.GetImpactData();
             int damage = CalcDamageHp(Value, targetImpactData.Shield);
             target.ApplyDamage(instigator,damage);

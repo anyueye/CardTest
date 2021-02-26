@@ -17,6 +17,7 @@ namespace CardGame
         /// <param name="target">目标</param>
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
+            Debug.Log("GainHp");
             ImpactData targetImpactData = target.GetImpactData();
             int damage = HealthHp(Value);
             target.ApplyDamage(instigator,damage);

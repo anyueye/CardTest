@@ -1,4 +1,6 @@
 ﻿using DG.Tweening;
+using GameFramework;
+using GameFramework.Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
@@ -9,9 +11,9 @@ namespace CardGame
     {
         public TargetingArrow _targetingArrow;
 
-        public EffectResolutionSystem effectResolutionSystem;
-        public DeckDrawingSystem DeckDrawingSystem;
-        public HandPresentationSystem HandPresentationSystem;
+        // public EffectResolutionSystem effectResolutionSystem;
+        // public DeckDrawingSystem DeckDrawingSystem;
+        // public HandPresentationSystem HandPresentationSystem;
 
 
         private Camera MainCamera;
@@ -40,8 +42,14 @@ namespace CardGame
         private const float CardSelectionCanceledAnimationTime = 0.2f;
 
         // 无目标
+        /// <summary>
+        /// 无目标卡牌释放后到屏幕特定位置时间
+        /// </summary>
         private const float CardAnimationTime = 0.4f;
-        private const float CardAboutToBePlayedOffsetY = 1.5f;
+        /// <summary>
+        /// 卡牌释放高度
+        /// </summary>
+        private const float CardAboutToBePlayedOffsetY = .8f;
 
         public override void Init()
         {
@@ -274,19 +282,50 @@ namespace CardGame
             var card = SelectedCard as Card;
             card.SetInteractable(false);
 
-            HandPresentationSystem.RearrangeHand(card);
-            HandPresentationSystem.RemoveCardFromHand(card);
-            HandPresentationSystem.MoveCardToDiscardPile(card);
+            // HandPresentationSystem.RearrangeHand(card);
+            // HandPresentationSystem.RemoveCardFromHand(card);
+            // HandPresentationSystem.MoveCardToDiscardPile(card);
 
-            DeckDrawingSystem.MoveCardToDiscardPile(card.Id);
+            // DeckDrawingSystem.MoveCardToDiscardPile(card.Id);
             
-            effectResolutionSystem.ResolveCardEffects(card,selectEnemy);
+            // effectResolutionSystem.ResolveCardEffects(card,selectEnemy);
+            
+            GameEntry.Event.Fire(this,CardSelectionEventArgs.Create(card,selectEnemy));
             
         }
+        
+        
+        
+        
 
         public bool HasSelectedCard()
         {
             return SelectedCard != null;
         }
+    }
+
+    public sealed class CardSelectionEventArgs:GameEventArgs
+    {
+        public static int EventId = typeof(CardSelectionEventArgs).GetHashCode();
+        public Card selectCard;
+        public TargetableObject selectTarget;
+
+        public CardSelectionEventArgs()
+        {
+            selectCard = null;
+        }
+        public static CardSelectionEventArgs Create(Card c,TargetableObject target)
+        {
+            CardSelectionEventArgs cardSelectionEventArgs = ReferencePool.Acquire<CardSelectionEventArgs>();
+            cardSelectionEventArgs.selectCard = c;
+            cardSelectionEventArgs.selectTarget = target;
+            return cardSelectionEventArgs;
+        }
+        public override void Clear()
+        {
+            selectCard = null;
+        }
+
+        public override int Id => EventId;
     }
 }

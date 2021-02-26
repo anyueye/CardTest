@@ -9,10 +9,10 @@ namespace CardGame
     public class HandPresentationSystem:GameSystem
     {
         private List<Card> handCards=new List<Card>();
-
-        public CardSelectionSystem cardSelectionSystem;
+        private List<Card> drawnCard=new List<Card>();
         
         private int drawnSize;
+        private int showSize;
         private bool isAnimating;
         
         private List<Vector3> positions;
@@ -29,23 +29,58 @@ namespace CardGame
         private readonly Vector3 originalCardScale = new Vector3(0.6f, 0.6f, 1.0f);
         
         public static float CardToDiscardPileAnimationTime = 0.3f;
+        public CardSelectionSystem cardSelectionSystem;
         
         public override void Init()
         {
             base.Init();
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
-            
+            GameEntry.Event.Subscribe(CardSelectionEventArgs.EventId,CardOut);
+            GameEntry.Event.Subscribe(DeckDrawingEventArgs.EventId,OpreateCards);
+            GameEntry.Event.Subscribe(UpdateDeckCountEventArgs.EventId,UpdateDeckCount);
+            GameEntry.Event.Subscribe(UpdateDiscardCountEventArgs.EventId,UpdateDiscardCount);
             positions = new List<Vector3>(PositionsCapacity);
             rotations = new List<Quaternion>(RotationsCapacity);
             sortingOrders = new List<int>(SortingOrdersCapacity);
         }
 
+        private void CardOut(object sender, GameEventArgs e)
+        {
+            CardSelectionEventArgs ne = (CardSelectionEventArgs) e;
+            var card = ne.selectCard;
+            RearrangeHand(card);
+            RemoveCardFromHand(card);
+            MoveCardToDiscardPile(card);
+        }
+
         public override void Shutdown()
         {
+            GameEntry.Event.Unsubscribe(CardSelectionEventArgs.EventId,CardOut);
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
+            GameEntry.Event.Unsubscribe(DeckDrawingEventArgs.EventId,OpreateCards);
+            GameEntry.Event.Unsubscribe(UpdateDeckCountEventArgs.EventId,UpdateDeckCount);
+            GameEntry.Event.Unsubscribe(UpdateDiscardCountEventArgs.EventId,UpdateDiscardCount);
             base.Shutdown();
+        }
+
+        private void UpdateDeckCount(object sender, GameEventArgs e)
+        {
+            UpdateDeckCountEventArgs ne = (UpdateDeckCountEventArgs) e;
+            gameUI.SetAmount(ne.deckCount,GameForm.DeckOrDiscard.deck);
+        }
+
+        private void UpdateDiscardCount(object sender, GameEventArgs e)
+        {
+            UpdateDiscardCountEventArgs ne = (UpdateDiscardCountEventArgs) e;
+            gameUI.SetAmount(ne.discardCount, GameForm.DeckOrDiscard.discard);
+        }
+
+        private void OpreateCards(object sender, GameEventArgs e)
+        {
+            DeckDrawingEventArgs ne = (DeckDrawingEventArgs) e;
+            CreateCardInHand(ne.drawnCards);
         }
 
         private void OnShowEntityFailure(object sender, GameEventArgs e)
@@ -61,37 +96,35 @@ namespace CardGame
             {
                 var card = (Card) ne.Entity.Logic;
                 handCards.Add(card);
+                drawnCard.Add(card);
+                showSize++;
                 card.SetInteractable(false);
                 card.css = cardSelectionSystem;
-                if (handCards.Count==drawnSize)
+                if (showSize==drawnSize)
                 {
-                    AnimateCardsFromDeckToHand();
+                    AnimateCardsFromDeckToHand(drawnCard);
                 }
             }
         }
-        
-       public void CreateCardInHand(List<int> hand, int deckSize)
+
+
+        private void CreateCardInHand(IEnumerable<int> hand)
         {
             drawnSize = 0;
-            for (int i = 0; i < hand.Count; i++)
+            showSize = 0;
+            drawnCard.Clear();
+            foreach (var t in hand)
             {
-                GameEntry.Entity.ShowCard(new CardData(GameEntry.Entity.GenerateSerialId(), 100, hand[i])
+                GameEntry.Entity.ShowCard(new CardData(GameEntry.Entity.GenerateSerialId(), 100, t)
                 {
                     Position = gameUI.GetDeckPos(),
                     LocalScale = Vector3.zero,
                 });
                 ++drawnSize;
             }
-            gameUI.SetAmount(deckSize,GameForm.DeckOrDiscard.deck);
         }
-
-       public void UpdateDiscardPileSize(int discardSize)
-       {
-           gameUI.SetAmount(discardSize, GameForm.DeckOrDiscard.discard);
-       }
        
-       
-        void AnimateCardsFromDeckToHand()
+        void AnimateCardsFromDeckToHand(ICollection<Card> drawnCards)
         {
             isAnimating = true;
             ArrangeHandCrads();
@@ -101,34 +134,44 @@ namespace CardGame
                 var i1 = i;
                 const float time = 0.5f;
                 var card = handCards[i];
-                var seq = DOTween.Sequence();
-                seq.AppendInterval(interval);
-                seq.AppendCallback(() =>
+                if (drawnCards.Contains(card))
                 {
-                    gameUI.RemoveDeckCard();
-                    var move = card.CachedTransform.DOMove(positions[i1], time).OnComplete(() =>
+                    var seq = DOTween.Sequence();
+                    seq.AppendInterval(interval);
+                    seq.AppendCallback(() =>
                     {
-                        card.CacheTransform(positions[i1], rotations[i1]);
+                        gameUI.RemoveDeckCard();
+                        var move = card.CachedTransform.DOMove(positions[i1], time).OnComplete(() =>
+                        {
+                            card.CacheTransform(positions[i1], rotations[i1]);
                         
+                        });
+                        card.CachedTransform.DORotateQuaternion(rotations[i1], time);
+                        card.CachedTransform.DOScale(originalCardScale, time);
+                        if (i1==handCards.Count-1)
+                        {
+                            move.OnComplete(() =>
+                            {
+                                isAnimating = false;
+                                card.CacheTransform(positions[i1], rotations[i1]);
+                                foreach (var c in handCards)
+                                {
+                                    c.SetInteractable(true);
+                                }
+                            });
+                        }
+                    });
+                    card.CardSortingGroup.sortingOrder = sortingOrders[i];
+                    interval += 0.2f;
+                }
+                else
+                {
+                    card.CachedTransform.DOMove(positions[i1], time).OnComplete(() => {
+                        card.CacheTransform(positions[i1], rotations[i1]);
+                        card.SetInteractable(true);
                     });
                     card.CachedTransform.DORotateQuaternion(rotations[i1], time);
-                    card.CachedTransform.DOScale(originalCardScale, time);
-                    if (i1==handCards.Count-1)
-                    {
-                        move.OnComplete(() =>
-                        {
-                            isAnimating = false;
-                            card.CacheTransform(positions[i1], rotations[i1]);
-                            foreach (var c in handCards)
-                            {
-                                c.SetInteractable(true);
-                            }
-                        });
-                    }
-                });
-                card.CardSortingGroup.sortingOrder = sortingOrders[i];
-                
-                interval += 0.2f;
+                }
             }
         }
 
@@ -160,14 +203,14 @@ namespace CardGame
         /// 删除特定牌后从新排列手牌   Rearrange:vt. 重新安排, 重新布置
         /// </summary>
         /// <param name="c"></param>
-        public void RearrangeHand(Card c)
+        void RearrangeHand(Card c)
         {
             handCards.Remove(c);
             ArrangeHandCrads();
             for (int i = 0; i < handCards.Count; i++)
             {
                 var card = handCards[i];
-                const float time = 0.3f;
+                const float time = 0.1f;
                 card.CachedTransform.DOMove(positions[i], time);
                 card.CachedTransform.DORotateQuaternion(rotations[i], time);
                 card.CardSortingGroup.sortingOrder = sortingOrders[i];
@@ -175,11 +218,11 @@ namespace CardGame
             }
         }
 
-        public void RemoveCardFromHand(Card c)
+        void RemoveCardFromHand(Card c)
         {
             handCards.Remove(c);
         }
-        public void MoveCardToDiscardPile(Card c)
+        void MoveCardToDiscardPile(Card c)
         {
             var seq = DOTween.Sequence();
             seq.AppendCallback(() =>

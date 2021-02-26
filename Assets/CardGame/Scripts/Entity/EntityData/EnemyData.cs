@@ -25,7 +25,7 @@ namespace CardGame
                 return;
             }
             _enemyName = drEnemy.Name;
-            MaxHP = Random.Range(drEnemy.HpMin, drEnemy.HpMax + 1);
+            _maxHp = Random.Range(drEnemy.HpMin, drEnemy.HpMax + 1);
             _defaultAtk = Random.Range(drEnemy.AtkMin,drEnemy.AtkMax);
             defaultSkill = drEnemy.Skill;
             currentHP=_maxHp;
@@ -46,6 +46,10 @@ namespace CardGame
             set => _defaultAtk = value;
         }
 
-        public override int MaxHP { get; set; }
+        public override int MaxHP { 
+            get => _maxHp;
+            set => _maxHp = value;
+            
+        }
     }
 }

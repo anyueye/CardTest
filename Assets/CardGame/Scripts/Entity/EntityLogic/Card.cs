@@ -25,7 +25,13 @@ namespace CardGame
 
         public enum CardState
         {
+            /// <summary>
+            /// 在手中
+            /// </summary>
             InHand,
+            /// <summary>
+            /// 释放
+            /// </summary>
             AboutToBePlayed
         }
 

@@ -12,7 +12,7 @@ namespace CardGame
 
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
-            
+            GameEntry.Event.FireNow(this,DrawnCardEventArgs.Create(Value));
         }
     }
 }

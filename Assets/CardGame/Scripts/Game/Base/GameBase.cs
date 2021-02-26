@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GameFramework.DataTable;
+﻿using System;
+using System.Collections.Generic;
 using GameFramework.Event;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -19,10 +19,10 @@ namespace CardGame
 
         private readonly List<GameSystem> _system = new List<GameSystem>();
 
-        private CardSelectionSystem _cardSelectionSystem;
-        private DeckDrawingSystem _deckDrawingSystem;
-        private HandPresentationSystem _handPresentationSystem;
-        private EffectResolutionSystem _effectResolutionSystem;
+        protected CardSelectionSystem _cardSelectionSystem;
+        protected DeckDrawingSystem _deckDrawingSystem;
+        protected HandPresentationSystem _handPresentationSystem;
+        protected EffectResolutionSystem _effectResolutionSystem;
         public List<int> staringDeck = new List<int>(){1001,1001,1001,1003,1002,1002,1002,1002,1000};
         public bool GameOver { get; protected set; }
         public bool Victory { get; protected set; }
@@ -31,12 +31,20 @@ namespace CardGame
         private bool _prepareCharacter;
         private bool _prepareUI;
 
+        private void Test(object sender, GameEventArgs e)
+        {
+            EventTest ne = (EventTest) e;
+            
+            Debug.LogError($"args={ne.t0},t1={ne.t1},sender={sender}");
+        }
         public virtual void Initialize()
         {
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             gameTurn = GameTurn.None;
+            
+            GameEntry.Event.Subscribe(EventTest.EventId,Test);
 
             GameEntry.UI.OpenUIForm(UIFormId.GameForm, this);
 
@@ -66,6 +74,9 @@ namespace CardGame
             {
                 sys.Init();
             }
+            
+            // GameEntry.Event.Fire(this,EventTest.Create0(12));
+            // GameEntry.Event.Fire(this,EventTest.Create1(45));
 
             _prepareCharacter = false;
             _prepareUI = false;
@@ -73,6 +84,8 @@ namespace CardGame
             _mPlayerLogic = null;
             _enemyLogic = new List<EnemyLogic>();
         }
+
+        
 
         public virtual void Shutdown()
         {
@@ -82,6 +95,8 @@ namespace CardGame
             }
 
             _system.Clear();
+            GameEntry.Event.Unsubscribe(EventTest.EventId,Test);
+
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
@@ -105,24 +120,41 @@ namespace CardGame
             {
                 sys.Update(elapseSeconds, realElapseSecondes);
             }
+            
+            switch (gameTurn)
+            {
+                case GameTurn.None:
+                    break;
+                case GameTurn.PlayerTurnBegan:
+                    break;
+                case GameTurn.PlayerTurnEnd:
+                    _deckDrawingSystem.MoveCardToDiscardPile();
+                    _handPresentationSystem.MoveHandToDiscardPile();
+                    gameTurn = GameTurn.EnemyTurnBegan;
+                    break;
+                case GameTurn.EnemyTurnBegan:
+                    break;
+                case GameTurn.EnemyTurnEnd:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
-            if (_prepareCharacter && _prepareUI)
+            if (!_prepareCharacter || !_prepareUI) return;
             {
                 foreach (var sys in _system)
                 {
                     sys.SetUI(m_GameForm);
                 }
-
-                _cardSelectionSystem.DeckDrawingSystem = _deckDrawingSystem;
-                _cardSelectionSystem.HandPresentationSystem = _handPresentationSystem;
-                _cardSelectionSystem.effectResolutionSystem = _effectResolutionSystem;
-                _deckDrawingSystem.handPresentatation = _handPresentationSystem;
+                
                 _handPresentationSystem.cardSelectionSystem = _cardSelectionSystem;
-
-
+                
                 _deckDrawingSystem.LoadDeck(staringDeck);
                 _deckDrawingSystem.ShuffleDeck();
-                _deckDrawingSystem.DrawCardsFromDeck(5);
+                
+                
+                GameEntry.Event.FireNow(this,DrawnCardEventArgs.Create(5));
+                
                 _prepareCharacter = _prepareUI = false;
             }
         }

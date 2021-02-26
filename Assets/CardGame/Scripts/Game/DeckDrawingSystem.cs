@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using GameFramework;
+using GameFramework.Event;
+using UnityEngine;
 
 namespace CardGame
 {
     public class DeckDrawingSystem : GameSystem
     {
-        public HandPresentationSystem handPresentatation;
+        // public HandPresentationSystem handPresentatation;
 
         /// <summary>
         /// 抽排堆
@@ -24,9 +27,23 @@ namespace CardGame
         public override void Init()
         {
             base.Init();
+            GameEntry.Event.Subscribe(CardSelectionEventArgs.EventId,MoveCardToDiscardPile);
+            GameEntry.Event.Subscribe(DrawnCardEventArgs.EventId,DrawCardsFromDeck);
             deckPile = new List<int>();
             discardPile = new List<int>();
             handPile = new List<int>();
+        }
+
+        private void DrawCardsFromDeck(object sender, GameEventArgs e)
+        {
+            DrawnCardEventArgs ne = (DrawnCardEventArgs) e;
+            DrawCardsFromDeck(ne.drawCount);
+        }
+
+        private void MoveCardToDiscardPile(object sender, GameEventArgs e)
+        {
+            CardSelectionEventArgs ne = (CardSelectionEventArgs) e;
+            MoveCardToDiscardPile(ne.selectCard.Id);
         }
 
         public override void Shutdown()
@@ -34,6 +51,8 @@ namespace CardGame
             deckPile.Clear();
             discardPile.Clear();
             handPile.Clear();
+            GameEntry.Event.Unsubscribe(DrawnCardEventArgs.EventId,DrawCardsFromDeck);
+            GameEntry.Event.Unsubscribe(CardSelectionEventArgs.EventId,MoveCardToDiscardPile);
             base.Shutdown();
         }
         
@@ -43,7 +62,7 @@ namespace CardGame
             deckPile.Shuffle();
         }
 
-        public int LoadDeck(List<int> deck)
+        public int LoadDeck(IEnumerable<int> deck)
         {
             var deckSize = 0;
             deckPile.AddRange(deck);
@@ -53,7 +72,7 @@ namespace CardGame
             return deckSize;
         }
 
-        public void DrawCardsFromDeck(int drawCount)
+        private void DrawCardsFromDeck(int drawCount)
         {
             while (true)
             {
@@ -70,14 +89,17 @@ namespace CardGame
                         drawnCards.Add(cardId);
                     }
 
-                    handPresentatation.CreateCardInHand(drawnCards, prevDeckSize);
-                    GameEntry.Event.Fire(this,);
+                    // handPresentatation.CreateCardInHand(drawnCards, prevDeckSize);
+                    GameEntry.Event.FireNow(this,DeckDrawingEventArgs.Create(drawnCards));
+                    GameEntry.Event.FireNow(this,UpdateDeckCountEventArgs.Create(prevDeckSize));
+
                 }
                 else
                 {
                     deckPile.AddRange(discardPile);
                     discardPile.Clear();
-                    handPresentatation.UpdateDiscardPileSize(discardPile.Count);
+                    GameEntry.Event.FireNow(this,UpdateDiscardCountEventArgs.Create(discardPile.Count));
+                    // handPresentatation.UpdateDiscardPileSize(discardPile.Count);
                     if (drawCount > deckPile.Count + discardPile.Count)
                     {
                         drawCount = deckPile.Count + discardPile.Count;
@@ -91,7 +113,7 @@ namespace CardGame
             }
         }
 
-        public void MoveCardToDiscardPile(int cardID)
+        private void MoveCardToDiscardPile(int cardID)
         {
             handPile.Remove(cardID);
             discardPile.Add(cardID);
@@ -103,4 +125,71 @@ namespace CardGame
             handPile.Clear();
         }
     }
+
+    public sealed class DeckDrawingEventArgs : GameEventArgs
+    {
+        public static int EventId => typeof(DeckDrawingEventArgs).GetHashCode();
+
+        public List<int> drawnCards;
+        
+        public static DeckDrawingEventArgs Create(List<int> drawnCard)
+        {
+            DeckDrawingEventArgs result = ReferencePool.Acquire<DeckDrawingEventArgs>();
+            result.drawnCards = drawnCard;
+            return result;
+        }
+        public override void Clear()
+        {
+            drawnCards.Clear();
+        }
+
+        public override int Id => EventId;
+    }
+    public sealed class UpdateDeckCountEventArgs : GameEventArgs
+    {
+        public static int EventId => typeof(UpdateDeckCountEventArgs).GetHashCode();
+        public int deckCount;
+
+        public UpdateDeckCountEventArgs()
+        {
+            deckCount = 0;
+        }
+        public static UpdateDeckCountEventArgs Create(int count)
+        {
+            UpdateDeckCountEventArgs result = ReferencePool.Acquire<UpdateDeckCountEventArgs>();
+            result.deckCount = count;
+            return result;
+        }
+        public override void Clear()
+        {
+            deckCount = 0;
+        }
+
+        public override int Id => EventId;
+    }
+
+    public sealed class UpdateDiscardCountEventArgs : GameEventArgs
+    {
+        public static int EventId => typeof(UpdateDiscardCountEventArgs).GetHashCode();
+        public int discardCount;
+
+        public UpdateDiscardCountEventArgs()
+        {
+            discardCount = 0;
+        }
+        public static UpdateDiscardCountEventArgs Create(int count)
+        {
+            UpdateDiscardCountEventArgs result = ReferencePool.Acquire<UpdateDiscardCountEventArgs>();
+            result.discardCount = count;
+            return result;
+        }
+        public override void Clear()
+        {
+            discardCount = 0;
+        }
+
+        public override int Id => EventId;
+    }
+    
+    
 }
