@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameFramework;
 using GameFramework.DataTable;
 using UnityEngine;
 using UnityGameFramework.Runtime;
-using Random = UnityEngine.Random;
 
 namespace CardGame
 {
@@ -84,7 +84,7 @@ namespace CardGame
 
             while (id.Count > nums.Count - count)
             {
-                var r = Random.Range(0, id.Count);
+                var r = Utility.Random.GetRandom(0, id.Count);
                 result.Add(nums[id[r]]);
                 id.Remove(id[r]);
             }

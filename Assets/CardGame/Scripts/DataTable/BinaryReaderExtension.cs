@@ -11,12 +11,21 @@ namespace CardGame
             return new Vector4(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
         }
 
-        public static List<int> ReadList(this BinaryReader binaryReader,int len)
+        public static List<int> ReadInt32List(this BinaryReader binaryReader,int len)
         {
             var temp = new List<int>(len);
             for (int i = 0; i < len; i++)
             {
                 temp.Add(binaryReader.ReadInt32());
+            }
+            return temp;
+        }
+        public static List<float> ReadSingleList(this BinaryReader binaryReader,int len)
+        {
+            var temp = new List<float>(len);
+            for (int i = 0; i < len; i++)
+            {
+                temp.Add(binaryReader.ReadSingle());
             }
             return temp;
         }

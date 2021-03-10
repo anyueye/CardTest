@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-19 16:32:42.149
+// 生成时间：2021-03-10 17:16:53.159
 //------------------------------------------------------------
 
 using GameFramework;
@@ -107,7 +107,7 @@ namespace CardGame
             MP = int.Parse(columnStrings[index++]);
             Physical = int.Parse(columnStrings[index++]);
             HandLimit = int.Parse(columnStrings[index++]);
-            DefaultCards = DataTableExtension.ParseList(columnStrings[index++]);
+            DefaultCards = DataTableExtension.ParseInt32List(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -125,7 +125,7 @@ namespace CardGame
                     MP = binaryReader.Read7BitEncodedInt32();
                     Physical = binaryReader.Read7BitEncodedInt32();
                     HandLimit = binaryReader.Read7BitEncodedInt32();
-                    DefaultCards = binaryReader.ReadList(5);
+                    DefaultCards = binaryReader.ReadInt32List(4);
                 }
             }
 

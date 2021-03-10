@@ -36,6 +36,11 @@ namespace CardGame
             return Utility.Text.Format("Assets/CardGame/Sprites/Cards/CardsIcon/{0}.png", assetName);
         }
 
+        public static string GetEnemyIntentsAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/CardGame/Sprites/UI/Intents/{0}.png", assetName);
+        }
+
         public static string GetSceneAsset(string assetName)
         {
             return Utility.Text.Format("Assets/CardGame/Scenes/{0}.unity", assetName);

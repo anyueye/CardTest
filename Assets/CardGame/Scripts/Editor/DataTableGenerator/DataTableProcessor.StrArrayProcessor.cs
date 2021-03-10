@@ -37,7 +37,7 @@ namespace CardGame.Editor.DataTableTools
                 {
                     return temp;
                 }
-                string[] splitedValue = value.Split(',');
+                string[] splitedValue = value.Split('|');
                 temp = splitedValue.ToList();
                 listCount = temp.Count;
                 return temp;

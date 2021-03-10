@@ -23,7 +23,7 @@ namespace CardGame
         [SerializeField] private readonly string _cardName;
         [SerializeField] private int _cost;
         [SerializeField] private Material _material;
-        [SerializeField] private Sprite _icon;
+        [SerializeField] private string _iconPath;
         [SerializeField] private readonly CardType _type;
         [SerializeField] private readonly string _description;
 
@@ -69,18 +69,7 @@ namespace CardGame
             if (drCard.Material == "Default")
             {
             }
-
-            GameEntry.Resource.LoadAsset(AssetUtility.GetCardIconAsset(drCard.Picture), typeof(Sprite), Constant.AssetPriority.DictionaryAsset, new LoadAssetCallbacks(
-                (assetName, asset, duration, userData) =>
-                {
-                    Log.Info("Load Sprite '{0}' OK.", assetName);
-                    _icon = asset as Sprite;
-                },
-                (assetName, status, errorMessage, userData) =>
-                {
-                    Log.Error("Can not load font '{0}' from '{1}' with error message '{2}'.", drCard.Picture, assetName, errorMessage);
-                }));
-            
+            _iconPath = drCard.Picture;
             object[] temp = Array.ConvertAll<int, object>(values.ToArray(), input => input);
             _description = string.Format(drCard.Describe, temp);
         }
@@ -108,10 +97,10 @@ namespace CardGame
             set => _material = value;
         }
 
-        public Sprite Icon
+        public string IconPath
         {
-            get => _icon;
-            set => _icon = value;
+            get => _iconPath;
+            set => _iconPath = value;
         }
 
         public CardType Type

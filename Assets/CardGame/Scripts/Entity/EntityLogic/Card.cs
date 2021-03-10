@@ -1,10 +1,12 @@
 ﻿using System;
 using DG.Tweening;
+using GameFramework.Resource;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
+using UnityGameFramework.Runtime;
 
 namespace CardGame
 {
@@ -69,7 +71,18 @@ namespace CardGame
 
             nameText.text = _cardData.CardName;
             costText.text = _cardData.Cost.ToString();
-            image.sprite = _cardData.Icon;
+            GameEntry.Resource.LoadAsset(AssetUtility.GetCardIconAsset(_cardData.IconPath), typeof(Sprite), Constant.AssetPriority.DictionaryAsset, new LoadAssetCallbacks(
+                (assetName, asset, duration, uD) =>
+                {
+                    
+                    var _icon = asset as Sprite;
+                    image.sprite = _icon;
+                    Log.Info("Load Sprite '{0}' OK.", assetName,_icon);
+                },
+                (assetName, status, errorMessage, uD) =>
+                {
+                    Log.Error("Can not load font '{0}' from '{1}' with error message '{2}'.", _cardData.IconPath, assetName, errorMessage);
+                }));
             describeText.text = _cardData.Description;
         }
 

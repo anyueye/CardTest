@@ -4,6 +4,7 @@
     {
         None,
         PlayerTurnBegan,
+        PlayerTurnUpdate,
         PlayerTurnEnd,
         EnemyTurnBegan,
         EnemyTurnEnd,

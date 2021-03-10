@@ -43,7 +43,7 @@ namespace CardGame
         private void MoveCardToDiscardPile(object sender, GameEventArgs e)
         {
             CardSelectionEventArgs ne = (CardSelectionEventArgs) e;
-            MoveCardToDiscardPile(ne.selectCard.Id);
+            MoveCardToDiscardPile(ne.selectCard.CardData.CardId);
         }
 
         public override void Shutdown()

@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-19 16:32:42.155
+// 生成时间：2021-03-10 17:16:53.166
 //------------------------------------------------------------
 
 using GameFramework;
@@ -84,7 +84,16 @@ namespace CardGame
         /// <summary>
         /// 获取默认攻击手段。
         /// </summary>
-        public List<int> Skill
+        public List<int> Intent
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取释放概率。
+        /// </summary>
+        public List<int> IntentRatio
         {
             get;
             private set;
@@ -107,7 +116,8 @@ namespace CardGame
             HpMax = int.Parse(columnStrings[index++]);
             AtkMin = int.Parse(columnStrings[index++]);
             AtkMax = int.Parse(columnStrings[index++]);
-            Skill = DataTableExtension.ParseList(columnStrings[index++]);
+            Intent = DataTableExtension.ParseInt32List(columnStrings[index++]);
+            IntentRatio = DataTableExtension.ParseInt32List(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -125,7 +135,8 @@ namespace CardGame
                     HpMax = binaryReader.Read7BitEncodedInt32();
                     AtkMin = binaryReader.Read7BitEncodedInt32();
                     AtkMax = binaryReader.Read7BitEncodedInt32();
-                    Skill = binaryReader.ReadList(3);
+                    Intent = binaryReader.ReadInt32List(3);
+                    IntentRatio = binaryReader.ReadInt32List(3);
                 }
             }
 

@@ -40,14 +40,14 @@ namespace CardGame
             DataTableBase dataTable = dataTableComponent.CreateDataTable(dataRowType, name);
             dataTable.ReadData(dataTableAssetName, Constant.AssetPriority.DataTableAsset, userData);
         }
-        public static List<int> ParseList(string value)
+        public static List<int> ParseInt32List(string value)
         {
             List<int> temp = new List<int>();
             if (value=="null")
             {
                 return temp;
             }
-            string[] splitedValue = value.Split(',');
+            string[] splitedValue = value.Split('|');
             
             foreach (var t in splitedValue)
             {
@@ -56,15 +56,30 @@ namespace CardGame
             return temp;
         }
         
-        public static List<string> ParseStrList(string value)
+        public static List<string> ParseStringList(string value)
         {
             List<string> temp = new List<string>();
             if (value=="null")
             {
                 return temp;
             }
-            string[] splitedValue = value.Split(',');
+            string[] splitedValue = value.Split('|');
             return splitedValue.ToList();
+        }
+        public static List<float> ParseSingleList(string value)
+        {
+            List<float> temp = new List<float>();
+            if (value=="null")
+            {
+                return temp;
+            }
+            string[] splitedValue = value.Split('|');
+            
+            foreach (var t in splitedValue)
+            {
+                temp.Add(float.Parse(t));;
+            }
+            return temp;
         }
         
         

@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-19 16:32:42.167
+// 生成时间：2021-03-10 17:16:53.179
 //------------------------------------------------------------
 
 using GameFramework;
@@ -55,9 +55,27 @@ namespace CardGame
         }
 
         /// <summary>
+        /// 获取。
+        /// </summary>
+        public string Effect0
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取0=玩家，1=敌人，2=随机敌人，3=全部敌人，4=所有人包括自己。
+        /// </summary>
+        public int Target0
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取数值。
         /// </summary>
-        public int Value
+        public int Value0
         {
             get;
             private set;
@@ -66,7 +84,7 @@ namespace CardGame
         /// <summary>
         /// 获取。
         /// </summary>
-        public string Effect
+        public List<int> SourceActions0
         {
             get;
             private set;
@@ -75,16 +93,7 @@ namespace CardGame
         /// <summary>
         /// 获取。
         /// </summary>
-        public List<int> SourceActions
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取。
-        /// </summary>
-        public List<int> TargetActions
+        public List<int> TargetActions0
         {
             get;
             private set;
@@ -104,10 +113,11 @@ namespace CardGame
             index++;
             PatternName = columnStrings[index++];
             Icon = columnStrings[index++];
-            Value = int.Parse(columnStrings[index++]);
-            Effect = columnStrings[index++];
-            SourceActions = DataTableExtension.ParseList(columnStrings[index++]);
-            TargetActions = DataTableExtension.ParseList(columnStrings[index++]);
+            Effect0 = columnStrings[index++];
+            Target0 = int.Parse(columnStrings[index++]);
+            Value0 = int.Parse(columnStrings[index++]);
+            SourceActions0 = DataTableExtension.ParseInt32List(columnStrings[index++]);
+            TargetActions0 = DataTableExtension.ParseInt32List(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -122,10 +132,11 @@ namespace CardGame
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     PatternName = binaryReader.ReadString();
                     Icon = binaryReader.ReadString();
-                    Value = binaryReader.Read7BitEncodedInt32();
-                    Effect = binaryReader.ReadString();
-                    SourceActions = binaryReader.ReadList(3);
-                    TargetActions = binaryReader.ReadList(3);
+                    Effect0 = binaryReader.ReadString();
+                    Target0 = binaryReader.Read7BitEncodedInt32();
+                    Value0 = binaryReader.Read7BitEncodedInt32();
+                    SourceActions0 = binaryReader.ReadInt32List(3);
+                    TargetActions0 = binaryReader.ReadInt32List(3);
                 }
             }
 
@@ -133,9 +144,197 @@ namespace CardGame
             return true;
         }
 
+        private KeyValuePair<int, string>[] m_Effect = null;
+
+        public int EffectCount
+        {
+            get
+            {
+                return m_Effect.Length;
+            }
+        }
+
+        public string GetEffect(int id)
+        {
+            foreach (KeyValuePair<int, string> i in m_Effect)
+            {
+                if (i.Key == id)
+                {
+                    return i.Value;
+                }
+            }
+
+            throw new GameFrameworkException(Utility.Text.Format("GetEffect with invalid id '{0}'.", id.ToString()));
+        }
+
+        public string GetEffectAt(int index)
+        {
+            if (index < 0 || index >= m_Effect.Length)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("GetEffectAt with invalid index '{0}'.", index.ToString()));
+            }
+
+            return m_Effect[index].Value;
+        }
+
+        private KeyValuePair<int, int>[] m_Target = null;
+
+        public int TargetCount
+        {
+            get
+            {
+                return m_Target.Length;
+            }
+        }
+
+        public int GetTarget(int id)
+        {
+            foreach (KeyValuePair<int, int> i in m_Target)
+            {
+                if (i.Key == id)
+                {
+                    return i.Value;
+                }
+            }
+
+            throw new GameFrameworkException(Utility.Text.Format("GetTarget with invalid id '{0}'.", id.ToString()));
+        }
+
+        public int GetTargetAt(int index)
+        {
+            if (index < 0 || index >= m_Target.Length)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("GetTargetAt with invalid index '{0}'.", index.ToString()));
+            }
+
+            return m_Target[index].Value;
+        }
+
+        private KeyValuePair<int, int>[] m_Value = null;
+
+        public int ValueCount
+        {
+            get
+            {
+                return m_Value.Length;
+            }
+        }
+
+        public int GetValue(int id)
+        {
+            foreach (KeyValuePair<int, int> i in m_Value)
+            {
+                if (i.Key == id)
+                {
+                    return i.Value;
+                }
+            }
+
+            throw new GameFrameworkException(Utility.Text.Format("GetValue with invalid id '{0}'.", id.ToString()));
+        }
+
+        public int GetValueAt(int index)
+        {
+            if (index < 0 || index >= m_Value.Length)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("GetValueAt with invalid index '{0}'.", index.ToString()));
+            }
+
+            return m_Value[index].Value;
+        }
+
+        private KeyValuePair<int, List<int>>[] m_SourceActions = null;
+
+        public int SourceActionsCount
+        {
+            get
+            {
+                return m_SourceActions.Length;
+            }
+        }
+
+        public List<int> GetSourceActions(int id)
+        {
+            foreach (KeyValuePair<int, List<int>> i in m_SourceActions)
+            {
+                if (i.Key == id)
+                {
+                    return i.Value;
+                }
+            }
+
+            throw new GameFrameworkException(Utility.Text.Format("GetSourceActions with invalid id '{0}'.", id.ToString()));
+        }
+
+        public List<int> GetSourceActionsAt(int index)
+        {
+            if (index < 0 || index >= m_SourceActions.Length)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("GetSourceActionsAt with invalid index '{0}'.", index.ToString()));
+            }
+
+            return m_SourceActions[index].Value;
+        }
+
+        private KeyValuePair<int, List<int>>[] m_TargetActions = null;
+
+        public int TargetActionsCount
+        {
+            get
+            {
+                return m_TargetActions.Length;
+            }
+        }
+
+        public List<int> GetTargetActions(int id)
+        {
+            foreach (KeyValuePair<int, List<int>> i in m_TargetActions)
+            {
+                if (i.Key == id)
+                {
+                    return i.Value;
+                }
+            }
+
+            throw new GameFrameworkException(Utility.Text.Format("GetTargetActions with invalid id '{0}'.", id.ToString()));
+        }
+
+        public List<int> GetTargetActionsAt(int index)
+        {
+            if (index < 0 || index >= m_TargetActions.Length)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("GetTargetActionsAt with invalid index '{0}'.", index.ToString()));
+            }
+
+            return m_TargetActions[index].Value;
+        }
+
         private void GeneratePropertyArray()
         {
+            m_Effect = new KeyValuePair<int, string>[]
+            {
+                new KeyValuePair<int, string>(0, Effect0),
+            };
 
+            m_Target = new KeyValuePair<int, int>[]
+            {
+                new KeyValuePair<int, int>(0, Target0),
+            };
+
+            m_Value = new KeyValuePair<int, int>[]
+            {
+                new KeyValuePair<int, int>(0, Value0),
+            };
+
+            m_SourceActions = new KeyValuePair<int, List<int>>[]
+            {
+                new KeyValuePair<int, List<int>>(0, SourceActions0),
+            };
+
+            m_TargetActions = new KeyValuePair<int, List<int>>[]
+            {
+                new KeyValuePair<int, List<int>>(0, TargetActions0),
+            };
         }
     }
 }

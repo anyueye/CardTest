@@ -170,8 +170,7 @@ namespace CardGame.Editor.DataTableTools
                 {
                     if (dataTableProcessor.GetType(i).Name.Contains("List"))
                     {
-                        
-                        stringBuilder.AppendFormat("            {0} = DataTableExtension.Parse{1}(columnStrings[index++]);", dataTableProcessor.GetName(i), "List").AppendLine();
+                        stringBuilder.AppendFormat("            {0} = DataTableExtension.Parse{1}List(columnStrings[index++]);", dataTableProcessor.GetName(i), dataTableProcessor.GetType(i).GenericTypeArguments[0].Name).AppendLine();
 
                     }
                     else
@@ -219,7 +218,7 @@ namespace CardGame.Editor.DataTableTools
                     if (dataTableProcessor.GetType(i).Name.Contains("List"))
                     {
                         
-                        stringBuilder.AppendFormat("                    {0} = binaryReader.Read{1}({2});", dataTableProcessor.GetName(i), "List",dataTableProcessor.ListCount(i))
+                        stringBuilder.AppendFormat("                    {0} = binaryReader.Read{1}List({2});", dataTableProcessor.GetName(i), dataTableProcessor.GetType(i).GenericTypeArguments[0].Name,dataTableProcessor.ListCount(i))
                             .AppendLine();
                     }
                     else

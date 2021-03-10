@@ -6,17 +6,17 @@ namespace CardGame.Editor.DataTableTools
 {
     public sealed partial class DataTableProcessor
     {
-        private sealed class IntArrayProcessor:GenericDataProcessor<List<int>>
+        private sealed class FloatArrayProcessor:GenericDataProcessor<List<float>>
         {
             public override bool IsSystem { get=>false; }
-            public override string LanguageKeyword { get=>"List<int>"; }
+            public override string LanguageKeyword { get=>"List<float>"; }
             public override int listCount { get; set; }
 
             public override string[] GetTypeStrings()
             {
                 return new[]
                 {
-                    "List<int>"
+                    "List<float>"
                 };
             }
             
@@ -29,9 +29,9 @@ namespace CardGame.Editor.DataTableTools
                 }
             }
 
-            public override List<int> Parse(string value)
+            public override List<float> Parse(string value)
             {
-                List<int> temp = new List<int>();
+                List<float> temp = new List<float>();
                 if (value=="null")
                 {
                     return temp;
@@ -39,7 +39,7 @@ namespace CardGame.Editor.DataTableTools
                 string[] splitedValue = value.Split('|');
                 foreach (var t in splitedValue)
                 {
-                    temp.Add(int.Parse(t));;
+                    temp.Add(float.Parse(t));;
                 }
 
                 listCount = temp.Count;

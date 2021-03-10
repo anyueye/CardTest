@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-02-19 16:32:42.130
+// 生成时间：2021-03-10 17:16:53.137
 //------------------------------------------------------------
 
 using GameFramework;
@@ -100,7 +100,7 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取0=自己，1=敌人，2=随机敌人，3=全部敌人，4=所有人包括自己。
+        /// 获取0=玩家，1=敌人，2=随机敌人，3=全部敌人，4=所有人包括自己。
         /// </summary>
         public int Target0
         {
@@ -145,7 +145,7 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取0=自己，1=敌人，2=随机敌人，3=全部敌人，4=所有人包括自己。
+        /// 获取0=玩家，1=敌人，2=随机敌人，3=全部敌人，4=所有人包括自己。
         /// </summary>
         public int Target1
         {
@@ -201,13 +201,13 @@ namespace CardGame
             Effect0 = columnStrings[index++];
             Target0 = int.Parse(columnStrings[index++]);
             Value0 = int.Parse(columnStrings[index++]);
-            SourceActions0 = DataTableExtension.ParseList(columnStrings[index++]);
-            TargetActions0 = DataTableExtension.ParseList(columnStrings[index++]);
+            SourceActions0 = DataTableExtension.ParseInt32List(columnStrings[index++]);
+            TargetActions0 = DataTableExtension.ParseInt32List(columnStrings[index++]);
             Effect1 = columnStrings[index++];
             Target1 = int.Parse(columnStrings[index++]);
             Value1 = int.Parse(columnStrings[index++]);
-            SourceActions1 = DataTableExtension.ParseList(columnStrings[index++]);
-            TargetActions1 = DataTableExtension.ParseList(columnStrings[index++]);
+            SourceActions1 = DataTableExtension.ParseInt32List(columnStrings[index++]);
+            TargetActions1 = DataTableExtension.ParseInt32List(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -229,13 +229,13 @@ namespace CardGame
                     Effect0 = binaryReader.ReadString();
                     Target0 = binaryReader.Read7BitEncodedInt32();
                     Value0 = binaryReader.Read7BitEncodedInt32();
-                    SourceActions0 = binaryReader.ReadList(0);
-                    TargetActions0 = binaryReader.ReadList(0);
+                    SourceActions0 = binaryReader.ReadInt32List(0);
+                    TargetActions0 = binaryReader.ReadInt32List(0);
                     Effect1 = binaryReader.ReadString();
                     Target1 = binaryReader.Read7BitEncodedInt32();
                     Value1 = binaryReader.Read7BitEncodedInt32();
-                    SourceActions1 = binaryReader.ReadList(0);
-                    TargetActions1 = binaryReader.ReadList(0);
+                    SourceActions1 = binaryReader.ReadInt32List(0);
+                    TargetActions1 = binaryReader.ReadInt32List(0);
                 }
             }
 
