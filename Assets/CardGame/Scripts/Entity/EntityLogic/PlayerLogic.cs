@@ -38,19 +38,25 @@ namespace CardGame
 
         public override ImpactData GetImpactData()
         {
-            return new ImpactData(m_PlayerData.currentHP,0,0);
+            return new ImpactData(m_PlayerData.currentHP,0,shieldValue);
         }
 
         public override void ApplyDamage(Entity attacker, int damage)
         {
             base.ApplyDamage(attacker, damage);
-            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
+            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
         }
 
         public override void HealthHp(Entity healther, int hp)
         {
             base.HealthHp(healther, hp);
-            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.currentHP,0);
+            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
+        }
+
+        public override void GainShield(Entity entity, TargetableObjectData.Shield shield)
+        {
+            base.GainShield(entity, shield);
+            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,shieldValue);
         }
 
         protected override void OnShow(object userData)
@@ -61,7 +67,7 @@ namespace CardGame
             {
                 return;
             }
-            GameEntry.hpBar.ShowHPBar(this,m_PlayerData.MaxHP,0);
+            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
         }
     }
 }

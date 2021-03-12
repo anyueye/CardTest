@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 417186069}
   - component: {fileID: 417186068}
   m_Layer: 0
-  m_Name: HP Bar Instances
+  m_Name: WidgetComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,7 +352,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 573747257}
   - component: {fileID: 573747258}
   m_Layer: 0
-  m_Name: HPBar
+  m_Name: Wedget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,8 +451,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HPBarItemTemplate: {fileID: -3704059180132907975, guid: c10f442ab91d9eb469d048bcf5044570, type: 3}
-  m_HPBarInstanceRoot: {fileID: 417186067}
-  m_InstancePoolCapacity: 16
+  m_IntentItemTemplate: {fileID: 5782487507576542651, guid: 24ac93f31fb1e60429a8dbac6b82ddda, type: 3}
+  m_WidgetInstanceRoot: {fileID: 417186067}
+  m_HpPoolCapacity: 16
+  m_IntentPoolCapacity: 16
 --- !u!1 &829425248
 GameObject:
   m_ObjectHideFlags: 0

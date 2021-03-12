@@ -43,7 +43,7 @@ namespace CardGame
             }
         }
 
-        public void Init(Entity owner, Canvas parentCanvas,int hp,int shield)
+        public void Init(Entity owner, Canvas parentCanvas,int hp,int maxHp,int shield)
         {
             if (owner == null)
             {
@@ -58,19 +58,18 @@ namespace CardGame
             
             if (m_Owner != owner || m_OwnerId != owner.Id)
             {
-                maxValue = hp;
-                SetHp(hp);
-                SetShield(shield);
+                maxValue = maxHp;
+                var newValue = hp / (float)maxValue;
+                hpBar.fillAmount = newValue;
+                hpText.text = $"{hp.ToString()}/{maxValue.ToString()}";
                 m_Owner = owner;
                 m_OwnerId = owner.Id;
+                Refresh();
             }
-
-            Refresh();
-        }
-
-        public void ReflushHp(Entity owner,int hp,int shield)
-        {
-            SetHp(hp);
+            else
+            {
+                SetHp(hp);
+            }
             SetShield(shield);
         }
         
@@ -98,25 +97,19 @@ namespace CardGame
             shieldGroup.SetActive(shieldActive);
         }
 
-        public bool Refresh()
+        private bool Refresh()
         {
-
-            if (m_Owner != null && Owner.Available && Owner.Id == m_OwnerId)
-            {
-                Vector3 worldPosition = m_Owner.CachedTransform.position + Vector3.forward;
-                Vector3 screenPosition = GameEntry.Scene.MainCamera.WorldToScreenPoint(worldPosition);
-
-                Vector2 position;
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
-                    m_ParentCanvas.worldCamera, out position))
-                {
-                    m_CachedTransform.localPosition = position;
-                }
-            }
-
+            if (m_Owner == null || !Owner.Available || Owner.Id != m_OwnerId) return true;
+            var pivot = m_Owner.CachedTransform;
+            var canvasPos = GameEntry.Scene.MainCamera.WorldToViewportPoint(pivot.position + new Vector3(0, -0.5f, 0));
+            m_CachedTransform.anchorMin =m_CachedTransform.anchorMax= canvasPos;
             return true;
         }
-
+        public void Reset()
+        {
+            m_Owner = null;
+            gameObject.SetActive(false);
+        }
         
 
         private void Awake()

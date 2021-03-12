@@ -18,21 +18,20 @@ namespace CardGame
         /// <param name="target">目标</param>
         public override void Resolve(TargetableObject instigator, TargetableObject target)
         {
-            Debug.Log("Deal");
             ImpactData targetImpactData = target.GetImpactData();
             int damage = CalcDamageHp(Value, targetImpactData.Shield);
             target.ApplyDamage(instigator,damage);
         }
 
-        private int CalcDamageHp(int attack, int shield)
+        private int CalcDamageHp(int damage, int shield)
         {
             int result = 0;
-            if (attack<0)
+            if (damage<0)
             {
                 return  0;
             }
 
-            result = attack - shield;
+            result = damage - shield;
             return result;
         }
     }

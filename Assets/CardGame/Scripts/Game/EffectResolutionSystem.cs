@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameFramework.Event;
+using UnityEngine;
 
 namespace CardGame
 {
@@ -10,11 +11,20 @@ namespace CardGame
         {
             base.Init();
             GameEntry.Event.Subscribe(CardSelectionEventArgs.EventId,CardOut);
+            GameEntry.Event.Subscribe(EnemySelectionEventArgs.EventId,EnemyAtt);
+        }
+
+        private void EnemyAtt(object sender, GameEventArgs e)
+        {
+            EnemySelectionEventArgs ne = (EnemySelectionEventArgs) e;
+            TargetableObject enemy = (TargetableObject) sender;
+            ResolveEnemyEffects(enemy,ne.effects);
         }
 
         public override void Shutdown()
         {
             GameEntry.Event.Unsubscribe(CardSelectionEventArgs.EventId,CardOut);
+            GameEntry.Event.Unsubscribe(EnemySelectionEventArgs.EventId,EnemyAtt);
             base.Shutdown();
         }
 
@@ -43,6 +53,30 @@ namespace CardGame
                 }
             }
         }
+
+        private void ResolveEnemyEffects(TargetableObject instigator,List<Effect> effects)
+        {
+            foreach (var effect in effects)
+            {
+                if (effect is TargetableEffect targetableEffect)
+                {
+                    var targets = GetTargets(targetableEffect.Target, instigator);
+                    foreach (var target in targets)
+                    {
+                        targetableEffect.Resolve(instigator,target);
+                    }
+                }
+                
+            }
+        }
+        
+        /// <summary>
+        /// 获取目标，如果卡牌为单一目标则为选择到的敌人，否则根据卡牌效果返回目标
+        /// </summary>
+        /// <param name="target">卡牌效果攻击的目标</param>
+        /// <param name="selectedEnemy">选择到的敌人</param>
+        /// <returns>所有目标</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private IEnumerable<TargetableObject> GetTargets(EffectTargetType target,TargetableObject selectedEnemy)
         {
             var targets=new List<TargetableObject>(4);

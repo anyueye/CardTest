@@ -125,7 +125,9 @@ namespace CardGame
             handPile.Clear();
         }
     }
-
+    /// <summary>
+    /// 抽卡
+    /// </summary>
     public sealed class DeckDrawingEventArgs : GameEventArgs
     {
         public static int EventId => typeof(DeckDrawingEventArgs).GetHashCode();
@@ -145,6 +147,9 @@ namespace CardGame
 
         public override int Id => EventId;
     }
+    /// <summary>
+    /// 更新抽牌堆数量事件
+    /// </summary>
     public sealed class UpdateDeckCountEventArgs : GameEventArgs
     {
         public static int EventId => typeof(UpdateDeckCountEventArgs).GetHashCode();
@@ -167,7 +172,9 @@ namespace CardGame
 
         public override int Id => EventId;
     }
-
+    /// <summary>
+    /// 更新弃牌堆数量事件
+    /// </summary>
     public sealed class UpdateDiscardCountEventArgs : GameEventArgs
     {
         public static int EventId => typeof(UpdateDiscardCountEventArgs).GetHashCode();
