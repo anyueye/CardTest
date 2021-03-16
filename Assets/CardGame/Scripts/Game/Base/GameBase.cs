@@ -24,7 +24,7 @@ namespace CardGame
         protected DeckDrawingSystem _deckDrawingSystem;
         protected HandPresentationSystem _handPresentationSystem;
         protected EffectResolutionSystem _effectResolutionSystem;
-        public List<int> staringDeck = new List<int>() {1001, 1001, 1001, 1003, 1002, 1002, 1002, 1002, 1000};
+        public List<int> staringDeck = new List<int>() ;
         public bool GameOver { get; protected set; }
         public bool Victory { get; protected set; }
 
@@ -56,18 +56,18 @@ namespace CardGame
                 LocalScale = Vector3.one * 0.4f,
             });
 
-            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 200)
+            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 10)
             {
                 Position = new Vector3(1f, -1f, 0),
                 LocalScale = Vector3.one * 0.35f,
             });
 
-            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 201)
+            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 11)
             {
                 Position = new Vector3(4f, -1f, 0),
                 LocalScale = Vector3.one * 0.35f,
             });
-            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 201)
+            GameEntry.Entity.ShowEnemy(new EnemyData(GameEntry.Entity.GenerateSerialId(), 11)
             {
                 Position = new Vector3(7f, -1f, 0),
                 LocalScale = Vector3.one * 0.35f,

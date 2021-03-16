@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-03-10 17:16:53.170
+// 生成时间：2021-03-16 15:49:23.730
 //------------------------------------------------------------
 
 using GameFramework;
@@ -48,7 +48,7 @@ namespace CardGame
         /// <summary>
         /// 获取特性图片id。
         /// </summary>
-        public int FeaturesImage
+        public string FeaturesImage
         {
             get;
             private set;
@@ -64,9 +64,9 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取持续回合。
+        /// 获取函数。
         /// </summary>
-        public int Duration
+        public string Template
         {
             get;
             private set;
@@ -85,9 +85,9 @@ namespace CardGame
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             FeaturesName = columnStrings[index++];
-            FeaturesImage = int.Parse(columnStrings[index++]);
+            FeaturesImage = columnStrings[index++];
             Describe = columnStrings[index++];
-            Duration = int.Parse(columnStrings[index++]);
+            Template = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -101,9 +101,9 @@ namespace CardGame
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     FeaturesName = binaryReader.ReadString();
-                    FeaturesImage = binaryReader.Read7BitEncodedInt32();
+                    FeaturesImage = binaryReader.ReadString();
                     Describe = binaryReader.ReadString();
-                    Duration = binaryReader.Read7BitEncodedInt32();
+                    Template = binaryReader.ReadString();
                 }
             }
 

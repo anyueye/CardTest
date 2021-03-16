@@ -11,7 +11,10 @@ namespace CardGame
         [SerializeField] private string _enemyName;
         [SerializeField] private int _defaultAtk;
         [SerializeField] private int _maxHp;
+        private readonly int _statusId;
+
         
+
         readonly List<int> intentRatio;
         private readonly List<List<Effect>> enemyPattern = new List<List<Effect>>();
         readonly List<string> _intentUI = new List<string>();
@@ -37,10 +40,23 @@ namespace CardGame
                 string effName;
                 for (int i = 0; i < skillData.EffectCount&&(effName=skillData.GetEffectAt(i))!="null"; i++)
                 {
+                    if (effName.Contains("_"))
+                    {
+                        _statusId = int.Parse(effName.Split('_')[1]);
+                        effName = effName.Substring(0, effName.IndexOf('_'));
+                    }
                     var eff = Utility.Assembly.GetType($"CardGame.{effName}");
                     var value = skillData.GetValueAt(i);
                     EffectTargetType target = (EffectTargetType) skillData.GetTargetAt(i);
-                    var effect = (Effect) Activator.CreateInstance(eff, value, target);
+                    IntegerEffect effect;
+                    if (eff == typeof(ApplyStatus))
+                    {
+                        effect = (IntegerEffect) Activator.CreateInstance(eff, value, target,_statusId);
+                    }
+                    else
+                    {
+                        effect = (IntegerEffect) Activator.CreateInstance(eff, value, target);
+                    }
                     intentList.Add(effect);
                 }
                 enemyPattern.Add(intentList);
@@ -56,7 +72,10 @@ namespace CardGame
             get => _enemyName;
             set => _enemyName = value;
         }
-
+        public int StatusId
+        {
+            get => _statusId;
+        }
 
         public int DefaultAtk
         {

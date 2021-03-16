@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using GameFramework;
 using GameFramework.Event;
 using GameFramework.Fsm;
@@ -148,6 +149,7 @@ namespace CardGame
             var att = enemy.enemyData.EnemyPattern[enemy.attackIdx];
             GameEntry.Widget.HideIntent(enemyOwner.Owner);
             GameEntry.Event.FireNow(enemy,EnemySelectionEventArgs.Create(att));
+            enemyOwner.Owner.CachedTransform.DOShakePosition(0.3f);
             ChangeState<EnemyResetState>(enemyOwner);
         }
 

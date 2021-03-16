@@ -26,7 +26,7 @@ namespace CardGame
         [SerializeField] private string _iconPath;
         [SerializeField] private readonly CardType _type;
         [SerializeField] private readonly string _description;
-
+        private readonly int _statusId;
         readonly List<IntegerEffect> _effects = new List<IntegerEffect>();
 
         public IEnumerable<IntegerEffect> Effects
@@ -51,10 +51,25 @@ namespace CardGame
             List<int> values = new List<int>();
             for (int index = 0; index < drCard.EffectCount && (effName = drCard.GetEffectAt(index)) != "null"; index++)
             {
-                var eff = Utility.Assembly.GetType($"CardGame.{effName}");
+                if (effName.Contains('_'))
+                {
+                    _statusId = int.Parse(effName.Split('_')[1]);
+                    effName = effName.Substring(0, effName.IndexOf('_'));
+                }
+
+                var eff = Utility.Assembly.GetType($"CardGame.{effName}Effect");
                 var value = drCard.GetValueAt(index);
-                EffectTargetType targetType = (EffectTargetType) drCard.GetTargetAt(index);
-                var effect = (IntegerEffect) Activator.CreateInstance(eff, value, targetType);
+                EffectTargetType target = (EffectTargetType) drCard.GetTargetAt(index);
+                IntegerEffect effect;
+                if (eff == typeof(ApplyStatus))
+                {
+                    effect = (IntegerEffect) Activator.CreateInstance(eff, value, target,_statusId);
+                }
+                else
+                {
+                    effect = (IntegerEffect) Activator.CreateInstance(eff, value, target);
+                }
+
                 _effects.Add(effect);
                 if (value > 0)
                 {
@@ -69,11 +84,17 @@ namespace CardGame
             if (drCard.Material == "Default")
             {
             }
+
             _iconPath = drCard.Picture;
             object[] temp = Array.ConvertAll<int, object>(values.ToArray(), input => input);
             _description = string.Format(drCard.Describe, temp);
         }
 
+
+        public int StatusId
+        {
+            get => _statusId;
+        }
 
         public int CardId
         {

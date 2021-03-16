@@ -9,6 +9,7 @@ namespace CardGame
     {
         [SerializeField] private int m_HP = 0;
         [SerializeField] private List<Shield> shield=new List<Shield>();
+        [SerializeField] private List<StatusVariable> _statusVariables = new List<StatusVariable>();
         public TargetableObjectData(int entityId, int typeId) : base(entityId, typeId)
         {
         }
@@ -29,6 +30,12 @@ namespace CardGame
         {
             get=>shield;
             set=>shield=value;
+        }
+
+        public List<StatusVariable> CurrentStatus
+        {
+            get => _statusVariables;
+            set => _statusVariables = value;
         }
         
 

@@ -1,6 +1,6 @@
 ﻿namespace CardGame
 {
-    public class BlockSkill:EnemySkillBase
+    public class StatusVariable
     {
         
     }
