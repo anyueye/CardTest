@@ -115,7 +115,7 @@ namespace CardGame
             drawnCard.Clear();
             foreach (var t in hand)
             {
-                GameEntry.Entity.ShowCard(new CardData(GameEntry.Entity.GenerateSerialId(), 100, t)
+                GameEntry.Entity.ShowCard(new CardData(GameEntry.Entity.GenerateSerialId(), 0, t)
                 {
                     Position = gameUI.GetDeckPos(),
                     LocalScale = Vector3.zero,

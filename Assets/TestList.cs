@@ -1,48 +1,23 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using CardGame;
+using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TestList : MonoBehaviour
 {
-    [SerializeField]
-    public List<TargetableObjectData.Shield> test = new List<TargetableObjectData.Shield>()
-    {
-        new TargetableObjectData.Shield() {duration = 1, value = 1},
-        new TargetableObjectData.Shield() {duration = 1, value = 1},
-        new TargetableObjectData.Shield() {duration = 1, value = 1},
-        new TargetableObjectData.Shield() {duration = 2, value = 1}
-    };
+    public string world;
 
-    // Start is called before the first frame update
-    void Start()
+    [Button]
+    public void DestroyRepeatWorld()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Keyboard.current.wKey.wasPressedThisFrame)
-        {
-            // for (int i = 0; i < test.Count; i++)
-            // {
-            //     var temt = new TargetableObjectData.Shield();
-            //     temt = test[i];
-            //     temt.duration -= 1;
-            //     test[i] = temt;
-            // }
-
-            for (int i = test.Count-1; i >=0; i--)
-            {
-                var temt = test[i];
-                temt.duration -= 1;
-                test[i] = temt;
-                if (test[i].duration<=0)
-                {
-                    test.Remove(test[i]);
-                }
-            }
-        }
+        IEnumerable<char> distinctList = world.Distinct(); 
+        for (int i = 0; i < world.Length; i++) 
+        { 
+            while (world.IndexOf(world.Substring(i, 1), StringComparison.Ordinal) != world.LastIndexOf(world.Substring(i, 1), StringComparison.Ordinal)) 
+            { 
+                world = world.Remove(world.LastIndexOf(world.Substring(i, 1), StringComparison.Ordinal), 1); 
+            } 
+        } 
     }
 }

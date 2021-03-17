@@ -45,11 +45,11 @@ namespace CardGame
                         _statusId = int.Parse(effName.Split('_')[1]);
                         effName = effName.Substring(0, effName.IndexOf('_'));
                     }
-                    var eff = Utility.Assembly.GetType($"CardGame.{effName}");
+                    var eff = Utility.Assembly.GetType($"CardGame.{effName}Effect");
                     var value = skillData.GetValueAt(i);
                     EffectTargetType target = (EffectTargetType) skillData.GetTargetAt(i);
                     IntegerEffect effect;
-                    if (eff == typeof(ApplyStatus))
+                    if (eff == typeof(ApplyStatusEffect))
                     {
                         effect = (IntegerEffect) Activator.CreateInstance(eff, value, target,_statusId);
                     }

@@ -61,7 +61,7 @@ namespace CardGame
                 var value = drCard.GetValueAt(index);
                 EffectTargetType target = (EffectTargetType) drCard.GetTargetAt(index);
                 IntegerEffect effect;
-                if (eff == typeof(ApplyStatus))
+                if (eff == typeof(ApplyStatusEffect))
                 {
                     effect = (IntegerEffect) Activator.CreateInstance(eff, value, target,_statusId);
                 }
@@ -69,7 +69,7 @@ namespace CardGame
                 {
                     effect = (IntegerEffect) Activator.CreateInstance(eff, value, target);
                 }
-
+                
                 _effects.Add(effect);
                 if (value > 0)
                 {

@@ -627,6 +627,51 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1 &1635134633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1635134635}
+  - component: {fileID: 1635134634}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1635134634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635134633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0074e0d7e296c46acdfeaab93778d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  world: "\u6325\u821E\u6CD5\u6756\u653B\u51FB\u654C\u4EBA\u9020\u6210\u70B9\u4F24\u5BB3
+    \u6F5C\u5165\u8FF7\u96FE\u4E2D\u9690\u8EAB\u56DE\u5408\u672F\u8F70\u5927\u8111\u6655\u7729\u6240\u6709\u7535\u9EBB\u75F9\u968F\u673AX\u6B21\u6BCF\u8FD1\u6218\u5E08\u7CBE\u795E\u7A7F\u523A\u96F7\u9706"
+--- !u!4 &1635134635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635134633}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 394.45465, y: 439.34247, z: -26.564651}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1917442426
 GameObject:
   m_ObjectHideFlags: 0
