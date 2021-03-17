@@ -1,0 +1,22 @@
+{
+    "name": "NaughtyAttributes.Editor",
+    "references": [
+        "NaughtyAttributes.Core",
+        "Unity.Mathematics",
+        "SRTK.DOTS",
+        "SRTK.Generic",
+        "SRTK.Utility.Editor",
+        "SRTK.Utility.UnityEngine"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
