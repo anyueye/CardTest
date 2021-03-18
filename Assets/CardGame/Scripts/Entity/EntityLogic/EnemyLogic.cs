@@ -23,24 +23,24 @@ namespace CardGame
         public override ImpactData GetImpactData()
         {
             
-            return new ImpactData(_enemyData.currentHP,_enemyData.DefaultAtk,shieldValue);
+            return new ImpactData(_enemyData.currentHP,_enemyData.DefaultAtk,GetShieldValue(),_enemyData.CurrentStatus);
         }
 
-        public override void ApplyDamage(Entity attacker, int damage)
-        {
-            base.ApplyDamage(attacker, damage);
-            GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
-        }
-        public override void HealthHp(Entity healther, int hp)
-        {
-            base.HealthHp(healther, hp);
-            GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
-        }
-        public override void GainShield(Entity entity,TargetableObjectData.Shield shield)
-        {
-            base.GainShield(entity, shield);
-            GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,shieldValue);
-        }
+        // public override void ApplyDamage(Entity attacker, int damage)
+        // {
+        //     base.ApplyDamage(attacker, damage);
+        //     GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
+        // }
+        // public override void HealthHp(Entity healther, int hp)
+        // {
+        //     base.HealthHp(healther, hp);
+        //     GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
+        // }
+        // public override void GainShield(Entity entity,TargetableObjectData.Shield shield)
+        // {
+        //     base.GainShield(entity, shield);
+        //     GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,shieldValue);
+        // }
 
         protected override void OnShow(object userData)
         {
@@ -57,7 +57,7 @@ namespace CardGame
             enemyFsm = GameEntry.Fsm.CreateFsm(Id.ToString(), this, enemyStates);
             enemyFsm.Start<EnemyThinkState>();
             
-            GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
+            // GameEntry.Widget.ShowHPBar(this,_enemyData.currentHP,_enemyData.MaxHP,0);
         }
 
         protected override void OnDead(Entity attacker)

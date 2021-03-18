@@ -9,7 +9,7 @@ namespace CardGame
     {
         [SerializeField] private int m_HP = 0;
         [SerializeField] private List<Shield> shield=new List<Shield>();
-        [SerializeField] private List<DRStatus> _statusVariables = new List<DRStatus>();
+        [SerializeField] private Dictionary<string,Status> _statusVariables = new Dictionary<string,Status>();
         public TargetableObjectData(int entityId, int typeId) : base(entityId, typeId)
         {
         }
@@ -23,7 +23,7 @@ namespace CardGame
         public struct Status
         {
             public DRStatus drStatus;
-            public int Value;
+            public int duration;
         }
 
         public int currentHP
@@ -38,7 +38,7 @@ namespace CardGame
             set=>shield=value;
         }
 
-        public List<DRStatus> CurrentStatus
+        public Dictionary<string,Status> CurrentStatus
         {
             get => _statusVariables;
             set => _statusVariables = value;

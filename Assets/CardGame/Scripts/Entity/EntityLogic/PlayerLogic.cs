@@ -38,36 +38,36 @@ namespace CardGame
 
         public override ImpactData GetImpactData()
         {
-            return new ImpactData(m_PlayerData.currentHP,0,shieldValue);
+            return new ImpactData(m_PlayerData.currentHP,0,GetShieldValue(),m_PlayerData.CurrentStatus);
         }
 
-        public override void ApplyDamage(Entity attacker, int damage)
-        {
-            base.ApplyDamage(attacker, damage);
-            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
-        }
+        // public override void ApplyDamage(Entity attacker, int damage)
+        // {
+        //     base.ApplyDamage(attacker, damage);
+        //     GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
+        // }
 
-        public override void HealthHp(Entity healther, int hp)
-        {
-            base.HealthHp(healther, hp);
-            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
-        }
-
-        public override void GainShield(Entity entity, TargetableObjectData.Shield shield)
-        {
-            base.GainShield(entity, shield);
-            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,shieldValue);
-        }
+        // public override void HealthHp(Entity healther, int hp)
+        // {
+        //     base.HealthHp(healther, hp);
+        //     GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
+        // }
+        //
+        // public override void GainShield(Entity entity, TargetableObjectData.Shield shield)
+        // {
+        //     base.GainShield(entity, shield);
+        //     GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,shieldValue);
+        // }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
-            m_PlayerData = userData as PlayerData;
-            if (m_PlayerData==null)
-            {
-                return;
-            }
-            GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
+            // m_PlayerData = userData as PlayerData;
+            // if (m_PlayerData==null)
+            // {
+            //     return;
+            // }
+            // GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
         }
     }
 }
