@@ -1,31 +1,31 @@
 ﻿namespace CardGame
 {
-    public enum UIFormId
+    public enum UIFormId:byte
     {
         Undefined = 0,
 
         /// <summary>
         /// 弹出框。
         /// </summary>
-        DialogForm = 10000,
+        DialogForm = 1,
 
         /// <summary>
         /// 主菜单。
         /// </summary>
-        MenuForm = 10001,
+        MenuForm = 100,
 
         /// <summary>
         /// 设置。
         /// </summary>
-        SettingForm = 10002,
+        SettingForm = 101,
 
         /// <summary>
         /// 关于。
         /// </summary>
-        AboutForm = 10003,
+        AboutForm = 102,
         /// <summary>
         /// 游戏。
         /// </summary>
-        GameForm = 10004,
+        GameForm = 103,
     }
 }

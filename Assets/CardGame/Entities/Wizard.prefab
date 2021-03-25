@@ -4868,7 +4868,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5066,11 +5065,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9036807272834561305, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -9036807272834561305, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: -8833368988115698591, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
@@ -5086,11 +5085,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7978415561822584196, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -7978415561822584196, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: -6806354351956441027, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Name
@@ -5214,11 +5213,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3445410615637758937, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -3445410615637758937, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: -2795543498134389281, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
@@ -5346,11 +5345,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 498023449595343899, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 498023449595343899, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: 546772409227720059, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5386,11 +5385,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 738238008047322059, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 738238008047322059, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: 1600021938786135954, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
@@ -5430,11 +5429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2427853866340725355, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2427853866340725355, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: 2803877860849504293, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
@@ -5494,11 +5493,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873405550806769659, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3873405550806769659, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: 3910426875239371018, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5634,11 +5633,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6836183973354579010, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6836183973354579010, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_SortingLayerID
-      value: 223935015
+      value: 2098871733
       objectReference: {fileID: 0}
     - target: {fileID: 6904929192018517291, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
@@ -5655,6 +5654,10 @@ PrefabInstance:
     - target: {fileID: 7302608554390424946, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302608554390424946, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7772300702270802723, guid: d109e17c758a840b0a326e9d0f4352ba, type: 3}
       propertyPath: m_Layer

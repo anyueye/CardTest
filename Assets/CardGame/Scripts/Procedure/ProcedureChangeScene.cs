@@ -1,4 +1,5 @@
-﻿using GameFramework.Event;
+﻿using GameFramework.DataTable;
+using GameFramework.Event;
 using UnityGameFramework.Runtime;
 using ProcedureOwner=GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 namespace CardGame
@@ -7,6 +8,7 @@ namespace CardGame
     {
         public override bool UseNativeDialog { get=>true; }
 
+        private const int MenuSceneId = 1;
         private bool m_ChangeToMenu = false;
         private bool m_IsChangeSceneComplete = false;
         protected override void OnEnter(ProcedureOwner procedureOwner)
@@ -19,6 +21,13 @@ namespace CardGame
             GameEntry.Event.Subscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
             GameEntry.Event.Subscribe(LoadSceneDependencyAssetEventArgs.EventId, OnLoadSceneDependencyAsset);
             
+            
+            GameEntry.Sound.StopAllLoadingSounds();
+            GameEntry.Sound.StopAllLoadedSounds();
+            
+            GameEntry.Entity.HideAllLoadingEntities();
+            GameEntry.Entity.HideAllLoadedEntities();
+            
             string[] loadedSceneAssetNames = GameEntry.Scene.GetLoadedSceneAssetNames();
             for (int i = 0; i < loadedSceneAssetNames.Length; i++)
             {
@@ -27,7 +36,19 @@ namespace CardGame
 
             // 还原游戏速度
             GameEntry.Base.ResetNormalGameSpeed();
-            procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Normal);
+
+            int sceneId = procedureOwner.GetData<VarInt32>(NEXT_SCENE_ID);
+            
+            m_ChangeToMenu = sceneId == MenuSceneId;
+            IDataTable<DRScene> dtScene = GameEntry.DataTable.GetDataTable<DRScene>();
+            DRScene drScene = dtScene.GetDataRow(sceneId);
+            if (drScene == null)
+            {
+                Log.Warning("Can not load scene '{0}' from data table.", sceneId.ToString());
+                return;
+            }
+            
+            
             GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset("Main"), Constant.AssetPriority.SceneAsset, this);
         }
 

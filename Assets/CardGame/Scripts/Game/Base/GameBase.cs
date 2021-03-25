@@ -45,11 +45,13 @@ namespace CardGame
             GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             gameTurn = GameTurn.None;
-
+            GameEntry.UI.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
+            GameEntry.Widget.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
+            
             GameEntry.Event.Subscribe(EventTest.EventId, Test);
 
             GameEntry.UI.OpenUIForm(UIFormId.GameForm, this);
-
+           
             GameEntry.Entity.ShowPlayer(new PlayerData(GameEntry.Entity.GenerateSerialId(), 1)
             {
                 Position = new Vector3(-5f, -1f, 0),
@@ -237,7 +239,7 @@ namespace CardGame
             {
                 return;
             }
-
+            
             m_GameForm = (GameForm) ne.UIForm.Logic;
 
             _prepareUI = true;

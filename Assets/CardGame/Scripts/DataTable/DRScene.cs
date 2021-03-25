@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-03-25 13:11:55.173
+// 生成时间：2021-03-25 13:11:55.196
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,14 +19,14 @@ using UnityGameFramework.Runtime;
 namespace CardGame
 {
     /// <summary>
-    /// 测试。
+    /// 场景配置表。
     /// </summary>
-    public class DRCharacters : DataRowBase
+    public class DRScene : DataRowBase
     {
         private int m_Id = 0;
 
         /// <summary>
-        /// 获取编号。
+        /// 获取场景编号。
         /// </summary>
         public override int Id
         {
@@ -37,54 +37,18 @@ namespace CardGame
         }
 
         /// <summary>
-        /// 获取职业。
+        /// 获取资源名称。
         /// </summary>
-        public string Name
+        public string AssetName
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取生命。
+        /// 获取背景音乐编号。
         /// </summary>
-        public int HP
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取魔法。
-        /// </summary>
-        public int MP
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取体力。
-        /// </summary>
-        public int Physical
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取手牌上限。
-        /// </summary>
-        public int HandLimit
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取默认卡组。
-        /// </summary>
-        public List<int> DefaultCards
+        public int BackgroundMusicId
         {
             get;
             private set;
@@ -102,12 +66,8 @@ namespace CardGame
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            Name = columnStrings[index++];
-            HP = int.Parse(columnStrings[index++]);
-            MP = int.Parse(columnStrings[index++]);
-            Physical = int.Parse(columnStrings[index++]);
-            HandLimit = int.Parse(columnStrings[index++]);
-            DefaultCards = DataTableExtension.ParseInt32List(columnStrings[index++]);
+            AssetName = columnStrings[index++];
+            BackgroundMusicId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -120,12 +80,8 @@ namespace CardGame
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    Name = binaryReader.ReadString();
-                    HP = binaryReader.Read7BitEncodedInt32();
-                    MP = binaryReader.Read7BitEncodedInt32();
-                    Physical = binaryReader.Read7BitEncodedInt32();
-                    HandLimit = binaryReader.Read7BitEncodedInt32();
-                    DefaultCards = binaryReader.ReadInt32List(6);
+                    AssetName = binaryReader.ReadString();
+                    BackgroundMusicId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

@@ -20,6 +20,7 @@ namespace CardGame
             "Status",
             "UIForm",        
             "EnemyPattern",
+            "Scene"
                       
         };
 
@@ -63,7 +64,8 @@ namespace CardGame
                     return;
                 }
             }
-            // procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
+            procedureOwner.SetData<VarInt32>(NEXT_SCENE_ID, (int)SceneId.Main);
+            procedureOwner.SetData<VarByte>(GAME_MODE, (byte)GameMode.Normal);
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 

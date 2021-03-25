@@ -62,11 +62,11 @@ namespace CardGame
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
-            // m_PlayerData = userData as PlayerData;
-            // if (m_PlayerData==null)
-            // {
-            //     return;
-            // }
+            m_PlayerData = userData as PlayerData;
+            if (m_PlayerData==null)
+            {
+                return;
+            }
             // GameEntry.Widget.ShowHPBar(this,m_PlayerData.currentHP,m_PlayerData.MaxHP,0);
         }
     }

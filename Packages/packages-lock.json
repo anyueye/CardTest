@@ -47,6 +47,13 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.device-simulator": {
+      "version": "2.2.4-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.0",
       "depth": 1,

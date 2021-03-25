@@ -134,6 +134,7 @@ namespace CardGame
         {
             // Checks if the player clicked over a card.
             var mousePos = MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Debug.Log(mousePos);
             var hitInfo = Physics2D.Raycast(mousePos, Vector3.forward, Mathf.Infinity, CardLayer);
             if (hitInfo.collider != null && !SelectedCard)
             {

@@ -38,6 +38,8 @@ namespace CardGame
         
         private Canvas m_CachedCanvas = null;
 
+        public Canvas CachedCanvas => m_CachedCanvas;
+
         private void Start()
         {
             if (m_WidgetInstanceRoot == null)

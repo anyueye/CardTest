@@ -1,4 +1,5 @@
-﻿using ProcedureOwner=GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+﻿using UnityEngine;
+using ProcedureOwner=GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 namespace CardGame
 {
     public class ProcedureMenu:ProcedureBase
@@ -14,7 +15,7 @@ namespace CardGame
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            
+            Debug.Log("Enter");
         }
     }
 }
