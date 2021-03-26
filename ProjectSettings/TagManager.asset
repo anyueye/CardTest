@@ -41,6 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Trash
-    uniqueID: 2727232013
+  - name: BackGrounds
+    uniqueID: 805681633
+    locked: 0
+  - name: Chararctor
+    uniqueID: 2098871733
+    locked: 0
+  - name: UI
+    uniqueID: 2874689907
+    locked: 0
+  - name: Cards
+    uniqueID: 3323214003
+    locked: 0
+  - name: Topmost
+    uniqueID: 2307289497
     locked: 0
