@@ -45,8 +45,6 @@ namespace CardGame
             GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             gameTurn = GameTurn.None;
-            GameEntry.UI.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
-            GameEntry.Widget.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
             
             GameEntry.Event.Subscribe(EventTest.EventId, Test);
 

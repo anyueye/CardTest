@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3768466421637877226}
   - component: {fileID: 1537211590386605917}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameForm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 3768466421780377299}
   - component: {fileID: 3768466421780377297}
   - component: {fileID: 3768466421780377296}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 3768466421909160003}
   - component: {fileID: 3768466421909160001}
   - component: {fileID: 3768466421909160000}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 3768466421978426778}
   - component: {fileID: 3768466421978426776}
   - component: {fileID: 3768466421978426779}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 3768466422551332691}
   - component: {fileID: 3768466422551332689}
   - component: {fileID: 3768466422551332688}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DrawDeckWidget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 3768466422674569103}
   - component: {fileID: 3768466422674569101}
   - component: {fileID: 3768466422674569100}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 3768466422855567367}
   - component: {fileID: 3768466422855567365}
   - component: {fileID: 3768466422855567364}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 3768466422900516025}
   - component: {fileID: 3768466422900516023}
   - component: {fileID: 3768466422900516022}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CostWidget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 3768466422919307289}
   - component: {fileID: 3768466422919307287}
   - component: {fileID: 3768466422919307286}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DiscardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 3768466423381151561}
   - component: {fileID: 3768466423381151559}
   - component: {fileID: 3768466423381151558}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 3768466423433297628}
   - component: {fileID: 3768466423433297631}
   - component: {fileID: 3768466423433297630}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EndTurn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

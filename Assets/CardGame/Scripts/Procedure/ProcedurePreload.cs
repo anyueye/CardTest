@@ -64,7 +64,7 @@ namespace CardGame
                     return;
                 }
             }
-            procedureOwner.SetData<VarInt32>(NEXT_SCENE_ID, (int)SceneId.Main);
+            procedureOwner.SetData<VarInt32>(NEXT_SCENE_ID, (int)SceneId.Menu);
             procedureOwner.SetData<VarByte>(GAME_MODE, (byte)GameMode.Normal);
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }

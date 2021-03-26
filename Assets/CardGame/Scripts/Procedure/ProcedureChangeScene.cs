@@ -49,7 +49,7 @@ namespace CardGame
             }
             
             
-            GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset("Main"), Constant.AssetPriority.SceneAsset, this);
+            GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset(drScene.AssetName), Constant.AssetPriority.SceneAsset, this);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)

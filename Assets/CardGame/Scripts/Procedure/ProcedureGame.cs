@@ -42,7 +42,8 @@ namespace CardGame
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-
+            GameEntry.UI.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
+            GameEntry.Widget.CachedCanvas.worldCamera = GameEntry.Scene.MainCamera;
 
             m_GotoMenu = false;
             GameMode gameMode = (GameMode) procedureOwner.GetData<VarByte>(GAME_MODE).Value;

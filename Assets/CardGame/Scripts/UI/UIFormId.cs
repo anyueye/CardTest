@@ -20,9 +20,9 @@
         SettingForm = 101,
 
         /// <summary>
-        /// 关于。
+        /// 选择角色。
         /// </summary>
-        AboutForm = 102,
+        SelectCharactorForm = 102,
         /// <summary>
         /// 游戏。
         /// </summary>
